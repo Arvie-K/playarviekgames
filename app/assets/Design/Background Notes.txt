@@ -1,0 +1,4 @@
+Color of Gradient: 0, 118, 168
+Gradient Opacity: 84%
+
+Backdrop Color: 94, 94, 94
