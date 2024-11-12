@@ -1,10 +1,13 @@
+import styles from "./styles/home.module.css"
 
 export default function Home() {
   return (
     <>
-    <center>
-      <h1>Arvie K Games</h1>
-    </center>
+    <div className="container">
+      <div className={styles.feed}>
+
+      </div>
+    </div>
     </>
   );
 }
