@@ -3,7 +3,30 @@
 }
 
 .games{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns:  1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.game{
+    border-radius: 1rem;
+    /* padding: 0; */
+    margin: 1rem;
+    transition: transform .1s;
+}
+
+.gameImg{
+    border: 0.5rem solid white ;
+    width: 100%;
+    border-radius: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+.gameName{
+    text-align: center;
+}
+
+.game:hover{
+    transform: scale(1.1);
 }

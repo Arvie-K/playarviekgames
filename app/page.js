@@ -1,5 +1,6 @@
 import Navbar from './components/navbar.jsx';
 import GamesGrp from './components/gamesgroup.jsx';
+import Game from './components/game.jsx';
 import styles from './styles/Home.module.css';
 
 export default function Home() {
@@ -30,7 +31,11 @@ export default function Home() {
     <div className={styles.container}>
       <Navbar />
       <GamesGrp title='Featured'>
-
+        {
+          games.map((game) => {
+            return <Game key={game.id} title={game.title} img={game.image} />
+          })
+        }
       </GamesGrp>
     </div>
   );
