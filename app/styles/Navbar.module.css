@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    height: 80px; /* Adjust height as needed */
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .icon {
+    flex: 0 0 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .icon img {
+    height: 30px; /* Adjust size to match the design */
+    width: 30px;
+  }
+  
+  .logo {
+    flex: 1; /* Center-aligns the logo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo img {
+    height: 60px; /* Adjust logo size */
+  }
+  
