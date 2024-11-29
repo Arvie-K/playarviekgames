@@ -1,4 +1,5 @@
 import Navbar from './components/navbar.jsx';
+import GamesGrp from './components/gamesgroup.jsx';
 import styles from './styles/Home.module.css';
 
 export default function Home() {
@@ -28,28 +29,9 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Navbar />
-      {/* <div className={styles.content}>
-        <section>
-          <h2 className={styles.sectionHeading}>FEATURED</h2>
-          <div className={styles.grid}>
-            {games.map((game) => (
-              <div key={game.id} className={styles.card}>
-                <img src={game.image} alt={game.title} />
-              </div>
-            ))}
-          </div>
-        </section>
-        <section>
-          <h2 className={styles.sectionHeading}>MORE CATEGORIES</h2>
-          <div className={styles.grid}>
-            {games.map((game) => (
-              <div key={game.id} className={styles.card}>
-                <img src={game.image} alt={game.title} />
-              </div>
-            ))}
-          </div>
-        </section>
-      </div> */}
+      <GamesGrp title='Featured'>
+
+      </GamesGrp>
     </div>
   );
 }

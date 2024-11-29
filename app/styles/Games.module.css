@@ -1,0 +1,9 @@
+.grp{
+    padding: 2rem;
+}
+
+.games{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
