@@ -8,19 +8,18 @@ import logo from "../assets/Ui/ArvieKGamesLogoFull.png"
 const Navbar = () => {
   return (
     <nav className={styles.navbar}>
-      {/* Search Icon */}
-      <div className={styles.icon}>
-        <img src={searchIcon.src} alt="Search" />
-      </div>
+      <div className={styles.content}>
+        <div className={styles.icon}>
+          <img src={searchIcon.src} alt="Search" className={styles.img}/>
+        </div>
 
-      {/* Logo */}
-      <div className={styles.logo}>
-        <img src={logo.src} alt="Arvie K Games" />
-      </div>
+        <div className={styles.logo}>
+          <img src={logo.src} alt="Arvie K Games" className={styles.img} />
+        </div>
 
-      {/* Home Icon */}
-      <div className={styles.icon}>
-        <img src={homeIcon.src} alt="Home" />
+        <div className={styles.icon}>
+          <img src={homeIcon.src} alt="Home" className={styles.img} />
+        </div>
       </div>
     </nav>
   );
