@@ -5,7 +5,7 @@ import styles from '../styles/Games.module.css'
 const gamesgroup = props => {
     return (
         <div className={styles.grp}>
-            <h1>{props.title}</h1>
+            <h1 style={{textAlign: 'center'}}>{props.title}</h1>
             <div className={styles.games}>
                 {props.children}
             </div>
