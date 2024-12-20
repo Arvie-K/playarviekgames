@@ -5,7 +5,11 @@
     padding-top: 1rem;
   }
 
-.content {
+.container{
+  text-align: center;
+}
+
+.topContent {
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -13,6 +17,10 @@
 
 .icon > img{
   width: 2.5rem;
+}
+
+.icon > img:hover{
+  cursor: pointer;
 }
 
 .icon:first-child > img{

@@ -32,3 +32,35 @@
 .game:hover{
     transform: scale(1.1);
 }
+
+.newGameContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.newGame{
+    display: inline-flex;
+    height: 20rem;
+    justify-content: center;
+    background-color: black;
+    z-index: -2;
+    position: relative;
+    border-radius: 2rem;
+}
+
+.imgGradient{
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0));
+}
+
+.newGameImg {
+    height: 100%;
+    position:relative;
+    border-radius: 1rem 0 0 1rem;
+    z-index: -1;
+}
+
+.devlog{
+    display: grid;
+    justify-items: center;
+    padding: 2rem;
+}
