@@ -2,17 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from '../styles/Games.module.css'
 
+import Link from 'next/link'
+
 const Game = props => {
+  console.log(typeof(props.meta.key))
   return (
-    <div className={styles.game}>
-        <img className={styles.gameImg} src={props.img} alt={props.title} />
-    </div>
+    <Link href={`/${props.meta.key}`}>
+      <div className={styles.game}>
+          <img className={styles.gameImg} src={props.meta.image} alt={props.meta.title} />
+      </div>
+    </Link>
   )
 }
 
 Game.propTypes = {
-    img: PropTypes.string,
-    title: PropTypes.string
+    meta: PropTypes.object
 }
 
 export default Game

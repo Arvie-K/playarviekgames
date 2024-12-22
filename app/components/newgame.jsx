@@ -11,10 +11,10 @@ const NewGame = props => {
             <div className={styles.imgGradient}>
                 <img className={styles.newGameImg} src={props.gameImg} alt="New Game" />
             </div>
-            <div className={styles.devlog} onClick={() => window.open(props.devlogURL)}>
+            <div className={styles.devlog}>
                 <h2>New game</h2>
                 <h4>Watch The Devlog</h4>
-                <img src={props.thumbnail} alt="Devlog Thumbnail" />
+                <img src={props.thumbnail} onClick={() => window.location.href = props.devlogURL} alt="Devlog Thumbnail" />
             </div>
         </div>
     </div>
