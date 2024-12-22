@@ -17,8 +17,8 @@ export default function Home() {
       />
       <GamesGrp title='Featured'>
         {
-          games.map((game) => {
-            return <Game key={game.id} meta={game} />
+          Object.keys(games).map((key, index) => {
+            return <Game key={index} slug={key} meta={games[key]} />
           })
         }
       </GamesGrp>

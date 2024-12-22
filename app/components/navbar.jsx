@@ -3,9 +3,6 @@ import styles from "../styles/Navbar.module.css";
 
 import logo from "../assets/Ui/ArvieKGamesLogoFull.png";
 
-import searchIcon from "../assets/Ui/icons/search.png";
-import homeIcon from "../assets/Ui/icons/home.png";
-
 const socials = [
   {
     id: 1,
@@ -35,13 +32,13 @@ const Navbar = () => {
         <div className={styles.container}>
             <div className={styles.topContent}>
                 <div className={styles.icon}>
-                    <img src={searchIcon.src} alt="Search" className={styles.img} />
+                    <img src="/icons/search.png" alt="Search" className={styles.img} />
                 </div>
                 <div className={styles.logo}>
                     <img src={logo.src} alt="Arvie K Games" className={styles.img} />
                 </div>
                 <div className={styles.icon}>
-                    <img src={homeIcon.src} alt="Home" className={styles.img} />
+                    <img src="/icons/home.png" alt="Home" className={styles.img} />
                 </div>
             </div>
         </div>

@@ -5,9 +5,8 @@ import styles from '../styles/Games.module.css'
 import Link from 'next/link'
 
 const Game = props => {
-  console.log(typeof(props.meta.key))
   return (
-    <Link href={`/${props.meta.key}`}>
+    <Link href={`/${props.slug}`}>
       <div className={styles.game}>
           <img className={styles.gameImg} src={props.meta.image} alt={props.meta.title} />
       </div>
