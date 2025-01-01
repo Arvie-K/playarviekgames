@@ -1,0 +1,14 @@
+- [x] navbar button funtions
+- [ ] Run button
+- [ ] devlog
+- [ ] description
+- [ ] controls
+- [ ] auto resolution
+- [ ] share, full screen
+- [ ] side bar styling
+- [ ] new game element fix
+- [ ] comments
+- [ ] database integration
+- [ ] search button
+- [ ] upload screen
+- [ ] on load run button

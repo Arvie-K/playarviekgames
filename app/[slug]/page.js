@@ -22,7 +22,17 @@ export default async function Page({ params }) {
                         </div>
                     </div>
                 </div>
-                <div className={styles.games}></div>
+                <div className={styles.games}>
+                    <h3 className={styles.text}>More Games</h3>
+                    <div className={styles.gamesGrp}>
+                        {
+                            Object.keys(games).map((key, index) => {
+                                if (key === slug) return null
+                                return <Game key={index} slug={key} meta={games[key]} />
+                            })
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     )

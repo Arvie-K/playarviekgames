@@ -4,27 +4,28 @@
 }
 
 .gameframe{
-    display: grid;
-    justify-content: center;
-    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
 }
 
 .game{
     display:block;
-    width:50vw;
-    height:50vh;
+    height:60vh;
 }
 
 .bar{
     background-color: white;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
+    grid-auto-flow: column;
 }
 
 .title{
+    padding: 10px;
     color: black;
-    padding: 0.5rem;
 }
 
 .barIcon{

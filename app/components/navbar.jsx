@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../styles/Navbar.module.css";
+import Link from "next/link";
 
 import logo from "../assets/Ui/ArvieKGamesLogoFull.png";
 
@@ -34,12 +35,16 @@ const Navbar = () => {
                 <div className={styles.icon}>
                     <img src="/icons/search.png" alt="Search" className={styles.img} />
                 </div>
-                <div className={styles.logo}>
-                    <img src={logo.src} alt="Arvie K Games" className={styles.img} />
-                </div>
-                <div className={styles.icon}>
-                    <img src="/icons/home.png" alt="Home" className={styles.img} />
-                </div>
+                <Link href={`/`}>
+                  <div className={styles.logo}>
+                      <img src={logo.src} alt="Arvie K Games" className={styles.img} />
+                  </div>
+                </Link>
+                <Link href={`/`}>
+                  <div className={styles.icon}>
+                      <img src="/icons/home.png" alt="Home" className={styles.img} />
+                  </div>
+                </Link>
             </div>
         </div>
     </nav>
