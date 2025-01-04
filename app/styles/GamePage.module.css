@@ -33,3 +33,9 @@
     width: 1.75rem;
     padding: 0.25rem;
 }
+
+.bottomSection{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem;
+}

@@ -1,8 +1,8 @@
 - [x] navbar button funtions
 - [x] Run button
-- [ ] devlog
-- [ ] description
-- [ ] controls
+- [x] devlog
+- [x] description
+- [x] controls
 - [ ] auto resolution
 - [ ] share, full screen
 - [ ] side bar styling

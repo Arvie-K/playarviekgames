@@ -15,12 +15,23 @@ export default async function Page({ params }) {
                 <div className={styles.gameframe}>
                     <iframe className={styles.game} srcDoc={`<form action='/games/${slug}/v3/index.html' style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
                         <input type="submit" value="" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: url('/icons/PlayButton.png') no-repeat center; background-size: contain; border: none; width: 100px; height: 100px;" />
-                    </form>`} frameborder="0" height="100%" width="100%"></iframe>
+                    </form>`} frameborder="0" height="100%" width="100%" allowFullScreen></iframe>
                     <div className={styles.bar}>
                         <h3 className={styles.title}>{game.title}</h3>
                         <div className={styles.actions}>
                             <img className={styles.barIcon} src="/icons/share.png" alt="" />
                             <img className={styles.barIcon} src="/icons/full.png" alt="" />
+                        </div>
+                    </div>
+                    <div className={styles.bottomSection}>
+                        <div className={styles.devlog}>
+                            <iframe src={`https://www.youtube.com/embed/${game.devlog}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <div className={styles.description}>
+                            <h2 className={styles.text}>Description</h2>
+                            <p className={styles.text}>{game.description}</p><br />
+                            <h2 className={styles.text}>Controls</h2>
+                            <p className={styles.text}>{game.controls}</p>
                         </div>
                     </div>
                 </div>
