@@ -1,5 +1,5 @@
 - [x] navbar button funtions
-- [ ] Run button
+- [x] Run button
 - [ ] devlog
 - [ ] description
 - [ ] controls
