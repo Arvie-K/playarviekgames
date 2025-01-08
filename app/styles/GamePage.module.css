@@ -26,6 +26,7 @@
 .barIcon{
     width: 1.75rem;
     padding: 0.25rem;
+    cursor: pointer;
 }
 
 .bottomSection{

@@ -4,7 +4,7 @@
 - [x] description
 - [x] controls
 - [x] auto resolution
-- [ ] share, full screen
+- [x] share, full screen
 - [ ] side bar styling
 - [ ] new game element fix
 - [ ] comments

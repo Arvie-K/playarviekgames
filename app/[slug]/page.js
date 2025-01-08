@@ -1,11 +1,33 @@
+'use client'
+
 import Navbar from "../components/navbar";
 import Game from "../components/game";
 
 import styles from '../styles/GamePage.module.css';
+import '../styles/GamePage.module.css';
 import games from '../api/games.json';
 
-export default async function Page({ params }) {
-    const slug = (await params).slug
+function fullScreen() {
+    const elem = document.querySelector('#game');
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+}
+
+function share() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+    alert('Link copied to clipboard');
+}
+
+export default function Page({ params }) {
+    const slug = params.slug
     const game = games[slug]
     return (
         <div>
@@ -14,15 +36,15 @@ export default async function Page({ params }) {
                 <div className={styles.ads}></div>
                 <div className={styles.gameframe}>
                     <div className={styles.box}>
-                        <iframe className={styles.game} srcDoc={`<form action='/games/${slug}/v3/index.html' style="display: flex; justify-content: center; align-items: center; height: 90vh; margin: 0;">
+                        <iframe id="game" className={styles.game} srcDoc={`<form action='/games/${slug}/v3/index.html' style="display: flex; justify-content: center; align-items: center; height: 90vh; margin: 0;">
                             <input type="submit" value="" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: url('/icons/PlayButton.png') no-repeat center; background-size: contain; border: none; width: 100px; height: 100px;" />
                         </form>`} frameBorder="0" allowFullScreen></iframe>
                     </div>
                     <div className={styles.bar}>
                         <h3 className={styles.title}>{game.title}</h3>
                         <div className={styles.actions}>
-                            <img className={styles.barIcon} src="/icons/share.png" alt="" />
-                            <img className={styles.barIcon} src="/icons/full.png" alt="" />
+                            <img className={styles.barIcon} src="/icons/share.png" alt="" onClick={share} />
+                            <img className={styles.barIcon} src="/icons/full.png" alt="" onClick={fullScreen} />
                         </div>
                     </div>
                     <div className={styles.bottomSection}>

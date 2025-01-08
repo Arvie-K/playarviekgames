@@ -40,11 +40,9 @@ const Navbar = () => {
                       <img src={logo.src} alt="Arvie K Games" className={styles.img} />
                   </div>
                 </Link>
-                <Link href={`/`}>
                   <div className={styles.icon}>
                       <img src="/icons/home.png" alt="Home" className={styles.img} />
                   </div>
-                </Link>
             </div>
         </div>
     </nav>

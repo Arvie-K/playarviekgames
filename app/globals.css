@@ -18,8 +18,9 @@ body {
   url('./assets/Design/bg.png');
   background-attachment: fixed;
   background-size: cover;
-  width: 100vw;
+  width: 98vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 a {
