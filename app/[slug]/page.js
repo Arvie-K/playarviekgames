@@ -13,9 +13,11 @@ export default async function Page({ params }) {
             <div className={styles.layout}>
                 <div className={styles.ads}></div>
                 <div className={styles.gameframe}>
-                    <iframe className={styles.game} srcDoc={`<form action='/games/${slug}/v3/index.html' style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-                        <input type="submit" value="" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: url('/icons/PlayButton.png') no-repeat center; background-size: contain; border: none; width: 100px; height: 100px;" />
-                    </form>`} frameborder="0" height="100%" width="100%" allowFullScreen></iframe>
+                    <div className={styles.box}>
+                        <iframe className={styles.game} srcDoc={`<form action='/games/${slug}/v3/index.html' style="display: flex; justify-content: center; align-items: center; height: 90vh; margin: 0;">
+                            <input type="submit" value="" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: url('/icons/PlayButton.png') no-repeat center; background-size: contain; border: none; width: 100px; height: 100px;" />
+                        </form>`} frameBorder="0" allowFullScreen></iframe>
+                    </div>
                     <div className={styles.bar}>
                         <h3 className={styles.title}>{game.title}</h3>
                         <div className={styles.actions}>
@@ -25,13 +27,17 @@ export default async function Page({ params }) {
                     </div>
                     <div className={styles.bottomSection}>
                         <div className={styles.devlog}>
-                            <iframe src={`https://www.youtube.com/embed/${game.devlog}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            <iframe src={`https://www.youtube.com/embed/${game.devlog}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                         </div>
                         <div className={styles.description}>
-                            <h2 className={styles.text}>Description</h2>
-                            <p className={styles.text}>{game.description}</p><br />
-                            <h2 className={styles.text}>Controls</h2>
-                            <p className={styles.text}>{game.controls}</p>
+                            <div>
+                                <h2 className={styles.text}>Description</h2>
+                                <p className={styles.text}>{game.description}</p><br />
+                            </div>
+                            <div>
+                                <h2 className={styles.text}>Controls</h2>
+                                <p className={styles.text}>{game.controls}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

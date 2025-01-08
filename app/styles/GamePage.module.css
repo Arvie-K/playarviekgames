@@ -1,6 +1,6 @@
 .layout{
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 2.5fr 1fr;
 }
 
 .gameframe{
@@ -8,12 +8,6 @@
     flex-direction: column;
     text-align: center;
     padding: 1rem;
-}
-
-.game{
-    display:block;
-    height:60vh;
-    background-color: black;
 }
 
 .bar{
@@ -37,5 +31,56 @@
 .bottomSection{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    padding: 2rem;
+}
+
+.games{
     padding: 1rem;
 }
+
+.box {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 56.25%;
+}
+
+.game {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.description{
+    display: grid;
+    row-gap: 1rem;
+    grid-template-columns: 1fr;
+}
+
+@media only screen and (max-width: 1040px){
+    .layout{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.15fr 1fr 2fr;
+    }
+    .gameframe{
+        width: 95vw;
+        justify-content: center;
+    }
+    .bottomSection{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    
+    .description{
+        padding-top: 1rem;
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.75rem;
+    }
+} 

@@ -3,7 +3,7 @@
 - [x] devlog
 - [x] description
 - [x] controls
-- [ ] auto resolution
+- [x] auto resolution
 - [ ] share, full screen
 - [ ] side bar styling
 - [ ] new game element fix
