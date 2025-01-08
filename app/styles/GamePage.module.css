@@ -37,6 +37,14 @@
 
 .games{
     padding: 1rem;
+    text-align: center;
+}
+
+.gamesGrp{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .box {

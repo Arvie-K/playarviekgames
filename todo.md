@@ -5,7 +5,7 @@
 - [x] controls
 - [x] auto resolution
 - [x] share, full screen
-- [ ] side bar styling
+- [x] side bar styling
 - [ ] new game element fix
 - [ ] comments
 - [ ] database integration
