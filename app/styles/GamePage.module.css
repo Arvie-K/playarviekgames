@@ -21,6 +21,7 @@
 .title{
     padding: 10px;
     color: black;
+    display: grid;
 }
 
 .barIcon{
@@ -70,6 +71,14 @@
     display: grid;
     row-gap: 1rem;
     grid-template-columns: 1fr;
+}
+
+.actions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1rem;
 }
 
 @media only screen and (max-width: 1040px){

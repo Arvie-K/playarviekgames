@@ -41,7 +41,10 @@ export default function Page({ params }) {
                         </form>`} frameBorder="0" allowFullScreen></iframe>
                     </div>
                     <div className={styles.bar}>
-                        <h3 className={styles.title}>{game.title}</h3>
+                        <div className={styles.title}>
+                            <h3 style={{color: "#000000"}}>{game.title}</h3>
+                            <h6 style={{color: "#000000"}}>By Arvie K</h6>
+                        </div>
                         <div className={styles.actions}>
                             <img className={styles.barIcon} src="/icons/share.png" alt="" onClick={share} />
                             <img className={styles.barIcon} src="/icons/full.png" alt="" onClick={fullScreen} />
