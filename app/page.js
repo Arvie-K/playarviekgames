@@ -7,21 +7,21 @@ import styles from './styles/Home.module.css';
 import games from './api/games.json';
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Navbar />
-      <NewGame 
-        gameImg="https://img.itch.zone/aW1nLzE3OTA2NDYxLnBuZw==/315x250%23c/%2FI7Now.png" 
-        devlogURL="https://www.youtube.com/?watch=BNVpt-CTbYg" 
-        thumbnail="https://i.ytimg.com/vi/BNVpt-CTbYg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD84ik9nYlnpr1KqD-n4iaulIXjAQ"
-      />
-      <GamesGrp title='Featured'>
-        {
-          Object.keys(games).map((key, index) => {
-            return <Game key={index} slug={key} meta={games[key]} />
-          })
-        }
-      </GamesGrp>
-    </div>
-  );
+    return (
+        <div className={styles.container}>
+            <Navbar />
+            <NewGame
+                gameImg="https://img.itch.zone/aW1nLzE3OTA2NDYxLnBuZw==/315x250%23c/%2FI7Now.png"
+                devlogURL="https://www.youtube.com/?watch=BNVpt-CTbYg"
+                thumbnail="https://i.ytimg.com/vi/BNVpt-CTbYg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD84ik9nYlnpr1KqD-n4iaulIXjAQ"
+            />
+            <GamesGrp title='Featured'>
+                {
+                    Object.keys(games).map((key, index) => {
+                        return <Game key={index} slug={key} meta={games[key]} />
+                    })
+                }
+            </GamesGrp>
+        </div>
+    );
 }
