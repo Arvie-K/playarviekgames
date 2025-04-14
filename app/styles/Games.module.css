@@ -1,72 +1,200 @@
-.grp{
+.grp {
     padding: 2rem;
     margin-top: 2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
 }
 
-.games{
-    /* display: grid;
-    grid-template-columns:  repeat(auto-fill, minmax(15rem, 1fr));
-    justify-content: center;
-    gap: 1rem;
-    justify-items: center; */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.games {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
-.game{
+.game {
     border-radius: 1rem;
-    /* padding: 0; */
-    margin: 1rem;
-    transition: transform .1s;
+    margin: 0.5rem;
+    transition: all 0.3s ease;
     max-width: 15rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    position: relative;
 }
 
-.gameImg{
-    border: 0.5rem solid white ;
+.gameImg {
+    border: 0.3rem solid rgba(255, 255, 255, 0.8);
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 0.8rem;
     padding: 0;
     margin: 0;
+    transition: all 0.3s ease;
 }
 
-.gameName{
+.gameTitleOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    border-radius: 0.8rem;
+}
+
+.gameTitleText {
+    color: white;
+    font-weight: 600;
     text-align: center;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-.game:hover{
-    transform: scale(1.1);
+.game:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.newGameContainer{
+.game:hover .gameTitleOverlay {
+    opacity: 1;
+}
+
+.game:hover .gameImg {
+    border-color: rgba(0, 168, 232, 0.8);
+    filter: brightness(0.8);
+}
+
+.game:hover .gameName {
+    color: var(--accent);
+}
+
+.game::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(to top, rgba(0, 118, 168, 0.3), transparent);
+    transition: height 0.3s ease;
+    z-index: -1;
+}
+
+.game:hover::after {
+    height: 100%;
+}
+
+.newGameContainer {
     display: flex;
     justify-content: center;
+    margin: 2rem 0;
+    opacity: 0;
+    animation: slideIn 0.8s ease 0.2s forwards;
 }
 
-.newGame{
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.newGame {
     display: inline-flex;
     height: 20rem;
     justify-content: center;
     background-color: black;
     z-index: -2;
     position: relative;
-    border-radius: 2rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
 }
 
-.imgGradient{
+.newGame:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.imgGradient {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.imgGradient::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0));
+    pointer-events: none;
 }
 
 .newGameImg {
     height: 100%;
-    position:relative;
+    position: relative;
     border-radius: 1rem 0 0 1rem;
-    z-index: -1;
+    transition: all 0.3s ease;
+    z-index: 0;
 }
 
-.devlog{
+.devlog {
     display: grid;
     justify-items: center;
     padding: 2rem;
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+}
+
+.sectionTitle::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .grp {
+        padding: 1rem;
+    }
+    
+    .games {
+        gap: 1rem;
+    }
+    
+    .game {
+        max-width: 140px;
+    }
+    
+    .newGame {
+        height: 15rem;
+        width: 90%;
+    }
 }

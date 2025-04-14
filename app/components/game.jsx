@@ -6,16 +6,20 @@ import Link from 'next/link'
 
 const Game = props => {
   return (
-    <Link href={`/${props.slug}`}>
-      <div className={styles.game}>
+    <Link className={styles.game} href={`/${props.slug}`}>
+      {/* <div> */}
           <img className={styles.gameImg} src={props.meta.image} alt={props.meta.title} />
-      </div>
+          <div className={styles.gameTitleOverlay}>
+            <h3 className={styles.gameTitleText}>{props.meta.title}</h3>
+          </div>
+      {/* </div> */}
     </Link>
   )
 }
 
 Game.propTypes = {
-    meta: PropTypes.object
+    meta: PropTypes.object,
+    slug: PropTypes.string
 }
 
 export default Game
