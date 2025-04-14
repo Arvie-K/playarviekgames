@@ -53,7 +53,7 @@ export default function Page({ params }) {
         const url = window.location.href;
         navigator.clipboard.writeText(url);
         
-        // Show a temporary notification instead of an alert
+        // Create and show a notification with improved animations
         const notification = document.createElement('div');
         notification.style.position = 'fixed';
         notification.style.bottom = '20px';
@@ -65,17 +65,46 @@ export default function Page({ params }) {
         notification.style.borderRadius = '4px';
         notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
         notification.style.zIndex = '1000';
-        notification.style.animation = 'fadeIn 0.3s ease';
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
         notification.textContent = 'Link copied to clipboard!';
         
         document.body.appendChild(notification);
         
+        // Add keyframes for the animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes notifySlideIn {
+                0% { opacity: 0; transform: translate(-50%, 20px); }
+                100% { opacity: 1; transform: translate(-50%, 0); }
+            }
+            
+            @keyframes notifySlideOut {
+                0% { opacity: 1; transform: translate(-50%, 0); }
+                100% { opacity: 0; transform: translate(-50%, 20px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Fade in animation
         setTimeout(() => {
-            notification.style.animation = 'fadeOut 0.3s ease';
-            notification.addEventListener('animationend', () => {
-                document.body.removeChild(notification);
-            });
-        }, 2000);
+            notification.style.animation = 'notifySlideIn 0.3s ease forwards';
+        }, 10);
+        
+        // Fade out and remove after delay
+        setTimeout(() => {
+            notification.style.animation = 'notifySlideOut 0.3s ease forwards';
+            
+            // Remove the element after animation completes
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    document.body.removeChild(notification);
+                }
+                if (style.parentNode) {
+                    document.head.removeChild(style);
+                }
+            }, 300);
+        }, 2500);
     }
 
     if (!game) {
