@@ -80,7 +80,7 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: `${gameName} - Arvie K Games`,
             description: gameDescription,
-            url: `https://arviek-games.vercel.app/${slug}`, // Replace with your actual domain
+            url: `https://www.arviek.games/${slug}`, // Replace with your actual domain
             siteName: 'Arvie K Games',
             images: [
                 {

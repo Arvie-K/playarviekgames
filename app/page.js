@@ -2,8 +2,48 @@ import Navbar from './components/navbar.jsx';
 import GamesGrp from './components/gamesgroup.jsx';
 import Game from './components/game.jsx';
 import NewGame from './components/newgame.jsx';
+import { Metadata } from 'next'; // Import Metadata type
 
 import styles from './styles/Home.module.css';
+
+// Metadata specific to the Homepage
+export async function generateMetadata() {
+    // You could potentially fetch some data here if needed for dynamic descriptions
+    // e.g., fetch featured games or latest additions.
+    // For now, we'll use static text optimized for the homepage.
+
+    const title = "Arvie K Games - Play Free Online Browser Games";
+    const description = "Discover and play a wide variety of free online browser games created by Arvie K. Featuring indie games, fan games, parodies, and unique creations. New games added regularly!";
+    // Use a specific image for the homepage OG/Twitter card if desired
+    const homeImageUrl = "https://www.arviek.games/ArvieKGamesLogoFull.png"; // Replace with your actual homepage OG image URL
+
+    return {
+        title: title, // Override default title
+        description: description, // Override default description
+        openGraph: {
+            title: title,
+            description: description,
+            url: "https://www.arviek.games", // Canonical URL for the homepage
+            images: [
+                {
+                    url: homeImageUrl, // Specific image for homepage sharing
+                    width: 1200,
+                    height: 630,
+                    alt: 'Arvie K Games Homepage',
+                },
+            ],
+            // siteName and type will be inherited from layout unless specified
+        },
+        twitter: {
+            title: title,
+            description: description,
+            images: [homeImageUrl], // Specific image for homepage sharing
+            // card type will be inherited from layout unless specified
+        },
+        // Keywords can also be more specific here if needed, or inherit from layout
+        // keywords: ['homepage keyword 1', 'homepage keyword 2', ...],
+    };
+}
 
 export default async function Home() {
     // Fetch data from the API
