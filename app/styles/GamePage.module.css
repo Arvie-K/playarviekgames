@@ -172,36 +172,46 @@
 }
 
 .description {
-    display: grid;
-    row-gap: 1.5rem;
-    grid-template-columns: 1fr;
+    display: flex; /* Changed from grid */
+    flex-direction: column; /* Stack items vertically */
+    gap: 1.5rem; /* Keep existing gap */
     background: rgba(0, 0, 0, 0.4);
     border-radius: 1rem;
     padding: 1.5rem;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: left; /* Align text to the left */
 }
 
-.description h2 {
-    font-size: 1.5rem;
+.descriptionSection {
+    /* Container for each section (Released, Description, Controls) */
+}
+
+.descriptionTitle {
+    font-size: 1.2rem; /* Adjusted size */
+    font-weight: 600; /* Make title bolder */
     margin-bottom: 0.5rem;
+    color: var(--text-light, #e0e0e0); /* Lighter color for title */
     position: relative;
-    display: inline-block;
+    display: inline-block; /* Needed for pseudo-element */
 }
 
-.description h2::after {
+.descriptionTitle::after {
     content: '';
     position: absolute;
     bottom: -4px;
     left: 0;
-    width: 40px;
+    width: 30px; /* Shorter underline */
     height: 2px;
-    background: var(--accent);
-    border-radius: 2px;
+    background: var(--accent, #0076A8); /* Use accent color */
+    border-radius: 1px;
 }
 
-.description p {
+.descriptionContent {
     line-height: 1.6;
+    color: var(--text-secondary, #b0b0b0); /* Slightly dimmer color for content */
+    margin: 0; /* Reset margin */
+    font-size: small;
 }
 
 .actions {

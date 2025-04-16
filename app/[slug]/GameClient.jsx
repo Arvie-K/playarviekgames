@@ -76,6 +76,17 @@ export default function GameClient({ game, slug, allGames }) {
         });
     }
 
+    function formatDate(dateString) {
+        if (!dateString) return null;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        try {
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        } catch (e) {
+            console.error("Error formatting date:", e);
+            return dateString; // Return original string if formatting fails
+        }
+    }
+
     return (
         <div className={styles.layout}>
             <div className={styles.ads}></div>
@@ -115,16 +126,22 @@ export default function GameClient({ game, slug, allGames }) {
                         </div>
                     )}
                     <div className={styles.description}>
+                        {game.release_date && (
+                            <div className={styles.descriptionSection}>
+                                <h4 className={styles.descriptionTitle}>Released</h4>
+                                <p className={styles.descriptionContent}>{formatDate(game.release_date)}</p>
+                            </div>
+                        )}
                         {game.description && (
-                            <div>
-                                <h2 className={styles.text}>Description</h2>
-                                <p className={styles.text}>{game.description}</p>
+                            <div className={styles.descriptionSection}>
+                                <h4 className={styles.descriptionTitle}>Description</h4>
+                                <p className={styles.descriptionContent}>{game.description}</p>
                             </div>
                         )}
                         {game.controls && (
-                            <div>
-                                <h2 className={styles.text}>Controls</h2>
-                                <p className={styles.text}>{game.controls}</p>
+                            <div className={styles.descriptionSection}>
+                                <h4 className={styles.descriptionTitle}>Controls</h4>
+                                <p className={styles.descriptionContent}>{game.controls}</p>
                             </div>
                         )}
                     </div>
