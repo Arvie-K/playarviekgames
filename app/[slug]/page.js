@@ -1,8 +1,132 @@
 import Navbar from "../components/navbar";
 import Link from 'next/link'; // Import Link
 import GameClient from './GameClient'; // Import the new client component
+import { Metadata } from 'next'; // Import Metadata type
 
 import styles from '../styles/GamePage.module.css';
+
+// Function to generate metadata dynamically
+export async function generateMetadata({ params }) {
+    const slug = params.slug;
+    let gameName = "Game"; // Default title
+    let gameDescription = "Play exciting games on Arvie K Games."; // Default description
+    let gameImage = "/default-game-image.png"; // Default image (replace with your actual default image path)
+    let gameCategories = []; // Default categories
+
+    try {
+        // Fetch only the specific game needed for metadata
+        const res = await fetch(`https://arviek-games-editor.vercel.app/games/${slug}`, { cache: 'no-store' });
+        if (res.ok) {
+            const gameData = await res.json();
+            if (gameData) {
+                gameName = gameData.name || "Game Not Found";
+                // Use game description if available, otherwise create a default one
+                gameDescription = gameData.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${gameData.category?.join(', ') || 'various'} categories.`;
+                gameImage = gameData.image || gameImage; // Use game image if available
+                gameCategories = gameData.category || [];
+            } else {
+                 // Attempt to fetch all games if specific fetch fails or returns no data (optional fallback)
+                 const allRes = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
+                 if (allRes.ok) {
+                     const gamesArray = await allRes.json();
+                     const foundGame = gamesArray.find(game => game._id === slug);
+                     if (foundGame) {
+                         gameName = foundGame.name || "Game Not Found";
+                         gameDescription = foundGame.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${foundGame.category?.join(', ') || 'various'} categories.`;
+                         gameImage = foundGame.image || gameImage;
+                         gameCategories = foundGame.category || [];
+                     } else {
+                         gameName = "Game Not Found";
+                         gameDescription = `Could not find the requested game (${slug}) on Arvie K Games.`;
+                     }
+                 } else {
+                    gameName = "Game Not Found";
+                    gameDescription = `Error loading game data for ${slug} on Arvie K Games.`;
+                 }
+            }
+        } else {
+             // Attempt to fetch all games if specific fetch fails (optional fallback)
+             const allRes = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
+             if (allRes.ok) {
+                 const gamesArray = await allRes.json();
+                 const foundGame = gamesArray.find(game => game._id === slug);
+                 if (foundGame) {
+                     gameName = foundGame.name || "Game Not Found";
+                     gameDescription = foundGame.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${foundGame.category?.join(', ') || 'various'} categories.`;
+                     gameImage = foundGame.image || gameImage;
+                     gameCategories = foundGame.category || [];
+                 } else {
+                     gameName = "Game Not Found";
+                     gameDescription = `Could not find the requested game (${slug}) on Arvie K Games.`;
+                 }
+             } else {
+                 console.error("Failed to fetch game for metadata:", res.status);
+                 gameName = "Error Loading Game";
+                 gameDescription = "There was an error loading game details. Please try again later.";
+             }
+        }
+    } catch (error) {
+        console.error("Error fetching game for metadata:", error);
+        gameName = "Error Loading Game";
+        gameDescription = "There was an error loading game details. Please try again later.";
+    }
+
+    const keywords = ['game', 'online game', 'free game', gameName, ...gameCategories, 'Arvie K Games'];
+
+    return {
+        title: `${gameName} - Play Free Online Games on Arvie K Games`,
+        description: gameDescription,
+        keywords: keywords.join(', '),
+        openGraph: {
+            title: `${gameName} - Arvie K Games`,
+            description: gameDescription,
+            url: `https://arviek-games.vercel.app/${slug}`, // Replace with your actual domain
+            siteName: 'Arvie K Games',
+            images: [
+                {
+                    url: gameImage, // Must be an absolute URL
+                    width: 800, // Optional
+                    height: 600, // Optional
+                    alt: `${gameName} Game Image`, // Optional
+                },
+            ],
+            locale: 'en_US',
+            type: 'website', // or 'article' if it fits better
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${gameName} - Arvie K Games`,
+            description: gameDescription,
+            // siteId: 'YourTwitterSiteID', // Optional Twitter Site ID
+            // creator: '@YourTwitterHandle', // Optional Twitter Creator Handle
+            // creatorId: 'YourTwitterCreatorID', // Optional Twitter Creator ID
+            images: [gameImage], // Must be an absolute URL
+        },
+        // You can add more metadata tags here as needed
+        // robots: { // Example for robots meta tag
+        //   index: true,
+        //   follow: true,
+        //   nocache: true,
+        //   googleBot: {
+        //     index: true,
+        //     follow: false,
+        //     noimageindex: true,
+        //     'max-video-preview': -1,
+        //     'max-image-preview': 'large',
+        //     'max-snippet': -1,
+        //   },
+        // },
+        // icons: { // Example for icons
+        //   icon: '/icon.png',
+        //   shortcut: '/shortcut-icon.png',
+        //   apple: '/apple-icon.png',
+        //   other: {
+        //     rel: 'apple-touch-icon-precomposed',
+        //     url: '/apple-touch-icon-precomposed.png',
+        //   },
+        // },
+    };
+}
 
 export default async function Page({ params }) {
     const slug = params.slug;
