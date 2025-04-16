@@ -22,7 +22,8 @@ export default async function Home() {
                 devlog: game.devlog,
                 categories: game.category, // Map category to categories
                 ads: game.ads,
-                url: game.url
+                url: game.url,
+                release_date: game.release_date // Include release_date
                 // Add other necessary fields if Game component uses them
             };
         }
@@ -47,21 +48,26 @@ export default async function Home() {
             {/* Map over categories and render GamesGrp for each */}
             {games && categoriesList.map((category) => {
                 // Filter games based on the 'categories' property in the transformed meta object
-                const filteredGames = Object.entries(games)
-                    .filter(([slug, meta]) => meta.categories && meta.categories.includes(category))
-                    .reduce((obj, [slug, meta]) => {
-                        obj[slug] = meta;
-                        return obj;
-                    }, {});
+                const filteredGamesEntries = Object.entries(games)
+                    .filter(([slug, meta]) => meta.categories && meta.categories.includes(category));
+
+                // Sort the filtered games by release_date (descending - latest first)
+                const sortedGamesEntries = filteredGamesEntries.sort(([slugA, metaA], [slugB, metaB]) => {
+                    // Handle cases where release_date might be missing or invalid
+                    const dateA = metaA.release_date ? new Date(metaA.release_date) : new Date(0);
+                    const dateB = metaB.release_date ? new Date(metaB.release_date) : new Date(0);
+                    return dateB - dateA; // Descending order
+                });
 
                 // Render GamesGrp only if there are games in this category
-                if (Object.keys(filteredGames).length > 0) {
+                if (sortedGamesEntries.length > 0) {
                     return (
                         <GamesGrp key={category} title={category}>
                             {
-                                Object.keys(filteredGames).map((key) => { // Removed index as key is unique
+                                // Map over the *sorted* entries
+                                sortedGamesEntries.map(([slug, meta]) => {
                                     // Pass slug (key) and the transformed meta object
-                                    return <Game key={key} slug={key} meta={filteredGames[key]} />
+                                    return <Game key={slug} slug={slug} meta={meta} />
                                 })
                             }
                         </GamesGrp>
