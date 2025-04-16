@@ -126,12 +126,6 @@ export default function GameClient({ game, slug, allGames }) {
                         </div>
                     )}
                     <div className={styles.description}>
-                        {game.release_date && (
-                            <div className={styles.descriptionSection}>
-                                <h4 className={styles.descriptionTitle}>Released</h4>
-                                <p className={styles.descriptionContent}>{formatDate(game.release_date)}</p>
-                            </div>
-                        )}
                         {game.description && (
                             <div className={styles.descriptionSection}>
                                 <h4 className={styles.descriptionTitle}>Description</h4>
@@ -142,6 +136,22 @@ export default function GameClient({ game, slug, allGames }) {
                             <div className={styles.descriptionSection}>
                                 <h4 className={styles.descriptionTitle}>Controls</h4>
                                 <p className={styles.descriptionContent}>{game.controls}</p>
+                            </div>
+                        )}
+                        {(game.release_date || game.last_updated) && (
+                            <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}> {/* Container for dates */}
+                                {game.release_date && (
+                                    <div className={styles.descriptionSection}>
+                                        <h4 className={styles.descriptionTitle} style={{ fontSize: '0.8em' }}>Released</h4>
+                                        <p className={styles.descriptionContent} style={{ fontSize: '0.7em' }}>{formatDate(game.release_date)}</p>
+                                    </div>
+                                )}
+                                {game.last_updated && (
+                                    <div className={styles.descriptionSection}>
+                                        <h4 className={styles.descriptionTitle} style={{ fontSize: '0.8em' }}>Last Updated</h4>
+                                        <p className={styles.descriptionContent} style={{ fontSize: '0.7em' }}>{formatDate(game.last_updated)}</p>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
