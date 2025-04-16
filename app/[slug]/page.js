@@ -1,120 +1,178 @@
-'use client'
-
-import { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
-import Game from "../components/game";
+import Link from 'next/link'; // Import Link
+import GameClient from './GameClient'; // Import the new client component
+import { Metadata } from 'next'; // Import Metadata type
 
 import styles from '../styles/GamePage.module.css';
-import games from '../api/games.json';
 
-export default function Page({ params }) {
-    const [isLoading, setIsLoading] = useState(true);
-    const [isFullScreen, setIsFullScreen] = useState(false);
+// Function to generate metadata dynamically
+export async function generateMetadata({ params }) {
     const slug = params.slug;
-    const game = games[slug];
-    
-    useEffect(() => {
-        // Simulate loading time
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 800);
-        
-        return () => clearTimeout(timer);
-    }, []);
+    let gameName = "Game"; // Default title
+    let gameDescription = "Play exciting games on Arvie K Games."; // Default description
+    let gameImage = "/default-game-image.png"; // Default image (replace with your actual default image path)
+    let gameCategories = []; // Default categories
 
-    function fullScreen() {
-        const elem = document.querySelector('#game');
-        if (!elem) return;
-        
-        setIsFullScreen(true);
-        
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-        }
-        
-        // Listen for fullscreen exit
-        document.addEventListener('fullscreenchange', handleFullscreenExit);
-    }
-    
-    function handleFullscreenExit() {
-        if (!document.fullscreenElement) {
-            setIsFullScreen(false);
-            document.removeEventListener('fullscreenchange', handleFullscreenExit);
-        }
-    }
-
-    function share() {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url);
-        
-        // Create and show a notification with improved animations
-        const notification = document.createElement('div');
-        notification.style.position = 'fixed';
-        notification.style.bottom = '20px';
-        notification.style.left = '50%';
-        notification.style.transform = 'translateX(-50%)';
-        notification.style.backgroundColor = 'rgba(0, 118, 168, 0.9)';
-        notification.style.color = 'white';
-        notification.style.padding = '10px 20px';
-        notification.style.borderRadius = '4px';
-        notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-        notification.style.zIndex = '1000';
-        notification.style.opacity = '0';
-        notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        notification.textContent = 'Link copied to clipboard!';
-        
-        document.body.appendChild(notification);
-        
-        // Add keyframes for the animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes notifySlideIn {
-                0% { opacity: 0; transform: translate(-50%, 20px); }
-                100% { opacity: 1; transform: translate(-50%, 0); }
+    try {
+        // Fetch only the specific game needed for metadata
+        const res = await fetch(`https://arviek-games-editor.vercel.app/games/${slug}`, { cache: 'no-store' });
+        if (res.ok) {
+            const gameData = await res.json();
+            if (gameData) {
+                gameName = gameData.name || "Game Not Found";
+                // Use game description if available, otherwise create a default one
+                gameDescription = gameData.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${gameData.category?.join(', ') || 'various'} categories.`;
+                gameImage = gameData.image || gameImage; // Use game image if available
+                gameCategories = gameData.category || [];
+            } else {
+                 // Attempt to fetch all games if specific fetch fails or returns no data (optional fallback)
+                 const allRes = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
+                 if (allRes.ok) {
+                     const gamesArray = await allRes.json();
+                     const foundGame = gamesArray.find(game => game._id === slug);
+                     if (foundGame) {
+                         gameName = foundGame.name || "Game Not Found";
+                         gameDescription = foundGame.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${foundGame.category?.join(', ') || 'various'} categories.`;
+                         gameImage = foundGame.image || gameImage;
+                         gameCategories = foundGame.category || [];
+                     } else {
+                         gameName = "Game Not Found";
+                         gameDescription = `Could not find the requested game (${slug}) on Arvie K Games.`;
+                     }
+                 } else {
+                    gameName = "Game Not Found";
+                    gameDescription = `Error loading game data for ${slug} on Arvie K Games.`;
+                 }
             }
-            
-            @keyframes notifySlideOut {
-                0% { opacity: 1; transform: translate(-50%, 0); }
-                100% { opacity: 0; transform: translate(-50%, 20px); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Fade in animation
-        setTimeout(() => {
-            notification.style.animation = 'notifySlideIn 0.3s ease forwards';
-        }, 10);
-        
-        // Fade out and remove after delay
-        setTimeout(() => {
-            notification.style.animation = 'notifySlideOut 0.3s ease forwards';
-            
-            // Remove the element after animation completes
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    document.body.removeChild(notification);
-                }
-                if (style.parentNode) {
-                    document.head.removeChild(style);
-                }
-            }, 300);
-        }, 2500);
+        } else {
+             // Attempt to fetch all games if specific fetch fails (optional fallback)
+             const allRes = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
+             if (allRes.ok) {
+                 const gamesArray = await allRes.json();
+                 const foundGame = gamesArray.find(game => game._id === slug);
+                 if (foundGame) {
+                     gameName = foundGame.name || "Game Not Found";
+                     gameDescription = foundGame.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${foundGame.category?.join(', ') || 'various'} categories.`;
+                     gameImage = foundGame.image || gameImage;
+                     gameCategories = foundGame.category || [];
+                 } else {
+                     gameName = "Game Not Found";
+                     gameDescription = `Could not find the requested game (${slug}) on Arvie K Games.`;
+                 }
+             } else {
+                 console.error("Failed to fetch game for metadata:", res.status);
+                 gameName = "Error Loading Game";
+                 gameDescription = "There was an error loading game details. Please try again later.";
+             }
+        }
+    } catch (error) {
+        console.error("Error fetching game for metadata:", error);
+        gameName = "Error Loading Game";
+        gameDescription = "There was an error loading game details. Please try again later.";
     }
 
-    if (!game) {
+    const keywords = ['game', 'online game', 'free game', gameName, ...gameCategories, 'Arvie K Games'];
+
+    return {
+        title: `${gameName} - Play Free Online Games on Arvie K Games`,
+        description: gameDescription,
+        keywords: keywords.join(', '),
+        openGraph: {
+            title: `${gameName} - Arvie K Games`,
+            description: gameDescription,
+            url: `https://www.arviek.games/${slug}`, // Replace with your actual domain
+            siteName: 'Arvie K Games',
+            images: [
+                {
+                    url: gameImage, // Must be an absolute URL
+                    width: 800, // Optional
+                    height: 600, // Optional
+                    alt: `${gameName} Game Image`, // Optional
+                },
+            ],
+            locale: 'en_US',
+            type: 'website', // or 'article' if it fits better
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${gameName} - Arvie K Games`,
+            description: gameDescription,
+            // siteId: 'YourTwitterSiteID', // Optional Twitter Site ID
+            // creator: '@YourTwitterHandle', // Optional Twitter Creator Handle
+            // creatorId: 'YourTwitterCreatorID', // Optional Twitter Creator ID
+            images: [gameImage], // Must be an absolute URL
+        },
+        // You can add more metadata tags here as needed
+        // robots: { // Example for robots meta tag
+        //   index: true,
+        //   follow: true,
+        //   nocache: true,
+        //   googleBot: {
+        //     index: true,
+        //     follow: false,
+        //     noimageindex: true,
+        //     'max-video-preview': -1,
+        //     'max-image-preview': 'large',
+        //     'max-snippet': -1,
+        //   },
+        // },
+        // icons: { // Example for icons
+        //   icon: '/icon.png',
+        //   shortcut: '/shortcut-icon.png',
+        //   apple: '/apple-icon.png',
+        //   other: {
+        //     rel: 'apple-touch-icon-precomposed',
+        //     url: '/apple-touch-icon-precomposed.png',
+        //   },
+        // },
+    };
+}
+
+export default async function Page({ params }) {
+    const slug = params.slug;
+
+    // Fetch all games data
+    let gameData = null; // Store the raw game object found
+    let allGames = null; // Store the transformed object for "More Games"
+
+    try {
+        const res = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
+        if (res.ok) {
+            const gamesArray = await res.json();
+
+            // Find the specific game object from the array
+            gameData = gamesArray.find(game => game._id === slug);
+
+            // Transform the array into an object keyed by _id for the "More Games" section
+            allGames = gamesArray.reduce((acc, game) => {
+                if (game._id) {
+                     acc[game._id] = { // Key is slug (_id)
+                        // Value is the meta object expected by Game component
+                        title: game.name,
+                        image: game.image,
+                        // Include other fields if needed by the Game component in "More Games"
+                        categories: game.category
+                    };
+                }
+                return acc;
+            }, {});
+
+        } else {
+            console.error("Failed to fetch games:", res.status);
+        }
+    } catch (error) {
+        console.error("Error fetching games:", error);
+    }
+
+    // Handle game not found
+    if (!gameData) { // Check if gameData was found
         return (
             <div>
                 <Navbar />
                 <div className={styles.layout}>
-                    <div className={styles.gameframe}>
+                    <div className={styles.gameframe} style={{ textAlign: 'center', padding: '50px' }}>
                         <h1>Game not found</h1>
-                        <p>Sorry, we couldn't find the game you're looking for.</p>
+                        <p>Sorry, we couldn't find the game "{slug}".</p>
                         <Link href="/">Return to home</Link>
                     </div>
                 </div>
@@ -122,97 +180,12 @@ export default function Page({ params }) {
         );
     }
 
+    // Render the client component with fetched data
     return (
         <div>
             <Navbar />
-            <div className={styles.layout}>
-                <div className={styles.ads}></div>
-                <div className={styles.gameframe}>
-                    <div className={styles.box}>
-                        {isLoading ? (
-                            <div style={{
-                                position: 'absolute', 
-                                top: 0, 
-                                left: 0, 
-                                width: '100%', 
-                                height: '100%', 
-                                background: 'black',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <div style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    border: '5px solid rgba(255, 255, 255, 0.3)',
-                                    borderTop: '5px solid #0076A8',
-                                    borderRadius: '50%',
-                                    animation: 'spin 1s linear infinite'
-                                }}></div>
-                                <style jsx>{`
-                                    @keyframes spin {
-                                        0% { transform: rotate(0deg); }
-                                        100% { transform: rotate(360deg); }
-                                    }
-                                `}</style>
-                            </div>
-                        ) : (
-                            <iframe 
-                                id="game" 
-                                className={styles.game} 
-                                srcDoc={`<form action='/games/${slug}/v3/index.html' style="display: flex; justify-content: center; align-items: center; height: 90vh; margin: 0; background-color: #000;">
-                                    <input type="submit" value="" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: url('/icons/PlayButton.png') no-repeat center; background-size: contain; border: none; width: 100px; height: 100px; transition: transform 0.3s ease; filter: drop-shadow(0 0 10px rgba(0, 118, 168, 0.5));" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" />
-                                </form>`} 
-                                frameBorder="0" 
-                                allowFullScreen
-                            ></iframe>
-                        )}
-                    </div>
-                    <div className={styles.bar}>
-                        <div className={styles.title}>
-                            <h3 style={{color: "#000000"}}>{game.title}</h3>
-                            <h6 style={{color: "#555555"}}>By Arvie K</h6>
-                        </div>
-                        <div className={styles.actions}>
-                            <img className={styles.barIcon} src="/icons/share.png" alt="Share" onClick={share} />
-                            <img className={styles.barIcon} src="/icons/full.png" alt="Fullscreen" onClick={fullScreen} />
-                        </div>
-                    </div>
-                    <div className={styles.bottomSection}>
-                        <div className={styles.devlog}>
-                            <iframe 
-                                src={`https://www.youtube.com/embed/${game.devlog}`} 
-                                title="YouTube video player" 
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerPolicy="strict-origin-when-cross-origin" 
-                                allowFullScreen
-                            ></iframe>
-                        </div>
-                        <div className={styles.description}>
-                            <div>
-                                <h2 className={styles.text}>Description</h2>
-                                <p className={styles.text}>{game.description}</p>
-                            </div>
-                            <div>
-                                <h2 className={styles.text}>Controls</h2>
-                                <p className={styles.text}>{game.controls}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.games}>
-                    <h3 className={styles.text}>More Games</h3>
-                    <div className={styles.gamesGrp}>
-                        {Object.keys(games)
-                            .filter(key => key !== slug)
-                            .map((key, index) => (
-                                <Game key={index} slug={key} meta={games[key]} />
-                            ))
-                        }
-                    </div>
-                </div>
-            </div>
+            {/* Pass the raw gameData object and the transformed allGames object */}
+            <GameClient game={gameData} slug={slug} allGames={allGames} />
         </div>
     );
 }

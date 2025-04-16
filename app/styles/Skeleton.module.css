@@ -1,0 +1,44 @@
+.skeletonBox {
+  background-color: #333; /* Darker skeleton */
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer animation */
+.skeletonBox::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(to right, transparent 0%, #444 50%, transparent 100%);
+  animation: skeletonShimmer 1.5s infinite;
+}
+
+.skeletonText {
+  margin-bottom: 0.5rem; /* Spacing for text lines */
+  height: 1em; /* Default height for text lines */
+}
+
+.skeletonCircle {
+  border-radius: 50%;
+}
+
+.skeletonGameCard {
+   width: 150px; /* Match game card width */
+   margin: 5px; /* Match game card margin */
+   display: inline-block; /* Or use flex/grid in parent */
+   vertical-align: top;
+}
+
+/* Keyframes for the shimmer animation */
+@keyframes skeletonShimmer {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
