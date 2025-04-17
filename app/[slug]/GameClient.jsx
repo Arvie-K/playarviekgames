@@ -38,10 +38,16 @@ export default function GameClient({ game, slug, allGames }) {
                     <p>This game contains content that is not suitable for users under 18 years old.</p>
                     <p>Please confirm that you are over 18 years of age to continue.</p>
                     <div className={styles.modalButtons}>
-                        <button className={styles.continueButton} onClick={handleContinue}>
+                        <button 
+                            className={`${styles.modalButton} ${styles.continueButton}`} 
+                            onClick={handleContinue}
+                        >
                             I am 18+ Continue
                         </button>
-                        <button className={styles.backButton} onClick={handleGoBack}>
+                        <button 
+                            className={`${styles.modalButton} ${styles.backButton}`} 
+                            onClick={handleGoBack}
+                        >
                             Go Back
                         </button>
                     </div>
