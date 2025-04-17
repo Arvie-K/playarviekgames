@@ -1,12 +1,12 @@
-import React, { Children } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styles from '../styles/Games.module.css'
 
 const gamesgroup = props => {
     return (
         <div className={styles.grp}>
-            <h1 style={{textAlign: 'center'}}>{props.title}</h1>
-            <div className={styles.games}>
+            <h2 className={styles.categoryTitle}>{props.title}</h2>
+            <div className={styles.gamesGrid}>
                 {props.children}
             </div>
         </div>
@@ -14,7 +14,8 @@ const gamesgroup = props => {
 }
 
 gamesgroup.propTypes = {
-    title: PropTypes.string
+    title: PropTypes.string,
+    children: PropTypes.node
 }
 
 export default gamesgroup
