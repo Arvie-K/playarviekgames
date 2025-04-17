@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import Footer from './components/footer.jsx';
 import "./globals.css";
 
 const atmospheric = localFont({
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${atmospheric.variable}`}>
         {children}
+        <Footer />
       </body>
     </html>
   );
