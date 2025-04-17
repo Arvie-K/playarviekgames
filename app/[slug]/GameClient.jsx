@@ -202,6 +202,36 @@ export default function GameClient({ game, slug, allGames }) {
                         )}
                     </div>
                 </div>
+                
+                {/* Credits Section */}
+                {game.credits && game.credits.length > 0 && (
+                    <div className={styles.creditsSection}>
+                        <h4 className={styles.creditsTitle}>Credits</h4>
+                        <ul className={styles.creditsList}>
+                            {game.credits.map((credit, index) => {
+                                // Check if the URL is valid using regex
+                                const isValidUrl = credit.url && /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(credit.url);
+                                
+                                return (
+                                    <li key={index} className={styles.creditItem}>
+                                        {isValidUrl ? (
+                                            <a 
+                                                href={credit.url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className={styles.creditLink}
+                                            >
+                                                {credit.title}
+                                            </a>
+                                        ) : (
+                                            <span className={styles.creditText}>{credit.title}</span>
+                                        )}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
             </div>
             <div className={styles.games}>
                 <h3 className={styles.text}>More Games</h3>
