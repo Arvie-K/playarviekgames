@@ -1,43 +1,13 @@
-/* Category Group */
 .grp {
-    margin: 2rem 0;
-    padding: 1rem;
+    padding: 2rem;
+    margin-top: 2rem;
     opacity: 0;
     animation: fadeIn 0.8s ease forwards;
-}
-
-.categoryTitle {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: #f8f8f8;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.categoryTitle:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #5c6bc0, transparent);
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* Games Grid */
-.gamesGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    width: 100%;
 }
 
 .games {
@@ -47,67 +17,25 @@
     gap: 1.5rem;
 }
 
-/* Game Card */
-.gameCard {
-    border-radius: 12px;
+.game {
+    border-radius: 1rem;
+    margin: 0.5rem;
+    transition: all 0.3s ease;
+    max-width: 15rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-    background-color: #1a1a2e;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-decoration: none;
-    display: block;
-}
-
-.gameCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.gameImageContainer {
     position: relative;
-    width: 100%;
-    height: 0;
-    padding-top: 75%; /* 4:3 aspect ratio */
-    overflow: hidden;
 }
 
 .gameImg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
     border: 0.3rem solid rgba(255, 255, 255, 0.8);
+    width: 100%;
     border-radius: 0.8rem;
     padding: 0;
     margin: 0;
-}
-
-.gameCard:hover .gameImg {
-    transform: scale(1.05);
-    border-color: rgba(0, 168, 232, 0.8);
-    filter: brightness(0.8);
-}
-
-.gameOverlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    padding: 1rem;
-    transition: opacity 0.3s ease;
-}
-
-.gameTitle {
-    color: white;
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: center;
+    transition: all 0.3s ease;
 }
 
 .gameTitleOverlay {
@@ -142,6 +70,11 @@
 
 .game:hover .gameTitleOverlay {
     opacity: 1;
+}
+
+.game:hover .gameImg {
+    border-color: rgba(0, 168, 232, 0.8);
+    filter: brightness(0.8);
 }
 
 .game:hover .gameName {
@@ -247,7 +180,6 @@
     border-radius: 3px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .grp {
         padding: 1rem;
@@ -264,25 +196,5 @@
     .newGame {
         height: 15rem;
         width: 90%;
-    }
-
-    .gamesGrid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 15px;
-    }
-    
-    .categoryTitle {
-        font-size: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .gamesGrid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 10px;
-    }
-    
-    .gameTitle {
-        font-size: 0.9rem;
     }
 }
