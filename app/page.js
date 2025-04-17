@@ -85,36 +85,38 @@ export default async function Home() {
                 thumbnail="https://i.ytimg.com/vi/BNVpt-CTbYg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD84ik9nYlnpr1KqD-n4iaulIXjAQ"
             />
 
-            {/* Map over categories and render GamesGrp for each */}
-            {games && categoriesList.map((category) => {
-                // Filter games based on the 'categories' property in the transformed meta object
-                const filteredGamesEntries = Object.entries(games)
-                    .filter(([slug, meta]) => meta.categories && meta.categories.includes(category));
+            <div className={styles.gamesCategories}>
+                {/* Map over categories and render GamesGrp for each */}
+                {games && categoriesList.map((category) => {
+                    // Filter games based on the 'categories' property in the transformed meta object
+                    const filteredGamesEntries = Object.entries(games)
+                        .filter(([slug, meta]) => meta.categories && meta.categories.includes(category));
 
-                // Sort the filtered games by release_date (descending - latest first)
-                const sortedGamesEntries = filteredGamesEntries.sort(([slugA, metaA], [slugB, metaB]) => {
-                    // Handle cases where release_date might be missing or invalid
-                    const dateA = metaA.release_date ? new Date(metaA.release_date) : new Date(0);
-                    const dateB = metaB.release_date ? new Date(metaB.release_date) : new Date(0);
-                    return dateB - dateA; // Descending order
-                });
+                    // Sort the filtered games by release_date (descending - latest first)
+                    const sortedGamesEntries = filteredGamesEntries.sort(([slugA, metaA], [slugB, metaB]) => {
+                        // Handle cases where release_date might be missing or invalid
+                        const dateA = metaA.release_date ? new Date(metaA.release_date) : new Date(0);
+                        const dateB = metaB.release_date ? new Date(metaB.release_date) : new Date(0);
+                        return dateB - dateA; // Descending order
+                    });
 
-                // Render GamesGrp only if there are games in this category
-                if (sortedGamesEntries.length > 0) {
-                    return (
-                        <GamesGrp key={category} title={category}>
-                            {
-                                // Map over the *sorted* entries
-                                sortedGamesEntries.map(([slug, meta]) => {
-                                    // Pass slug (key) and the transformed meta object
-                                    return <Game key={slug} slug={slug} meta={meta} />
-                                })
-                            }
-                        </GamesGrp>
-                    );
-                }
-                return null; // Return null if no games found for this category
-            })}
+                    // Render GamesGrp only if there are games in this category
+                    if (sortedGamesEntries.length > 0) {
+                        return (
+                            <GamesGrp key={category} title={category}>
+                                {
+                                    // Map over the *sorted* entries
+                                    sortedGamesEntries.map(([slug, meta]) => {
+                                        // Pass slug (key) and the transformed meta object
+                                        return <Game key={slug} slug={slug} meta={meta} />
+                                    })
+                                }
+                            </GamesGrp>
+                        );
+                    }
+                    return null; // Return null if no games found for this category
+                })}
+            </div>
         </div>
     );
 }

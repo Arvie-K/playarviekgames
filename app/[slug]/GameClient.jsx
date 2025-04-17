@@ -1,11 +1,54 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Game from "../components/game";
 import styles from '../styles/GamePage.module.css';
+import { useRouter } from 'next/navigation';
 
 export default function GameClient({ game, slug, allGames }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
+    const [showNsfwModal, setShowNsfwModal] = useState(false);
+    const router = useRouter();
+
+    // Check if game is NSFW when component mounts
+    useEffect(() => {
+        if (game && game.nsfw === true) {
+            setShowNsfwModal(true);
+        }
+    }, [game]);
+
+    // Handle user choosing to continue despite NSFW warning
+    const handleContinue = () => {
+        setShowNsfwModal(false);
+    };
+
+    // Handle user choosing to go back to home page
+    const handleGoBack = () => {
+        router.push('/');
+    };
+
+    // NSFW Warning Modal Component
+    const NsfwWarningModal = () => {
+        if (!showNsfwModal) return null;
+
+        return (
+            <div className={styles.modalOverlay}>
+                <div className={styles.modalContent}>
+                    <h2>Adult Content Warning</h2>
+                    <p>This game contains content that is not suitable for users under 18 years old.</p>
+                    <p>Please confirm that you are over 18 years of age to continue.</p>
+                    <div className={styles.modalButtons}>
+                        <button className={styles.continueButton} onClick={handleContinue}>
+                            I am 18+ Continue
+                        </button>
+                        <button className={styles.backButton} onClick={handleGoBack}>
+                            Go Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     function fullScreen() {
         const elem = document.querySelector('#game');
@@ -89,6 +132,9 @@ export default function GameClient({ game, slug, allGames }) {
 
     return (
         <div className={styles.layout}>
+            {/* NSFW Warning Modal */}
+            <NsfwWarningModal />
+            
             <div className={styles.ads}></div>
             <div className={styles.gameframe}>
                 <div className={styles.box}>
@@ -156,6 +202,36 @@ export default function GameClient({ game, slug, allGames }) {
                         )}
                     </div>
                 </div>
+                
+                {/* Credits Section */}
+                {game.credits && game.credits.length > 0 && (
+                    <div className={styles.creditsSection}>
+                        <h4 className={styles.creditsTitle}>Credits</h4>
+                        <ul className={styles.creditsList}>
+                            {game.credits.map((credit, index) => {
+                                // Check if the URL is valid using regex
+                                const isValidUrl = credit.url && /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(credit.url);
+                                
+                                return (
+                                    <li key={index} className={styles.creditItem}>
+                                        {isValidUrl ? (
+                                            <a 
+                                                href={credit.url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className={styles.creditLink}
+                                            >
+                                                {credit.title}
+                                            </a>
+                                        ) : (
+                                            <span className={styles.creditText}>{credit.title}</span>
+                                        )}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
             </div>
             <div className={styles.games}>
                 <h3 className={styles.text}>More Games</h3>
