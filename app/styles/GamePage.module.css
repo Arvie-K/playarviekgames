@@ -130,6 +130,13 @@
     width: 100%;
 }
 
+.gamesGrp img {
+    width: 100%; /* Ensure images fit within their container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Prevent images from being cut off */
+    border-radius: 8px; /* Add rounded corners */
+}
+
 .gamesGrp::-webkit-scrollbar {
     width: 6px;
 }
@@ -146,6 +153,13 @@
 
 .gamesGrp::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
+}
+
+.gamesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid layout */
+    gap: 20px; /* Add spacing between items */
+    padding: 20px; /* Add padding around the grid */
 }
 
 .box {

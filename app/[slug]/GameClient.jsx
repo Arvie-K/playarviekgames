@@ -159,10 +159,11 @@ export default function GameClient({ game, slug, allGames }) {
             </div>
             <div className={styles.games}>
                 <h3 className={styles.text}>More Games</h3>
-                <div className={styles.gamesGrp}>
+                <div className={styles.gamesGrid}> {/* Use a simplified grid class */}
                     {allGames && Object.keys(allGames)
                         .filter(key => key !== slug)
-                        .slice(0, 6)
+                        .sort(() => 0.5 - Math.random()) // Shuffle the games randomly
+                        .slice(0, 4) // Limit to 4 games
                         .map((key) => (
                             <Game key={key} slug={key} meta={allGames[key]} />
                         ))
