@@ -42,3 +42,15 @@
   background-color: black;
   padding: 1rem;
 }
+
+.socialIcon{
+  width: 2.25rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.socialIcon:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all 0.2s ease;
+}

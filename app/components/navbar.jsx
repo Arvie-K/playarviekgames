@@ -4,28 +4,14 @@ import Link from "next/link";
 
 import logo from "../assets/Ui/ArvieKGamesLogoFull.png";
 
-// const socials = [
-//   {
-//     id: 1,
-//     icon: "https://cdn-icons-png.flaticon.com/128/174/174848.png",
-//     link: "https://www.facebook.com/",
-//   },
-//   {
-//     id: 2,
-//     icon: "https://cdn-icons-png.flaticon.com/128/174/174876.png",
-//     link: "https://twitter.com/",
-//   },
-//   {
-//     id: 3,
-//     icon: "https://cdn-icons-png.flaticon.com/128/174/174855.png",
-//     link: "https://www.instagram.com/",
-//   },
-//   {
-//     id: 4,
-//     icon: "https://cdn-icons-png.flaticon.com/128/174/174883.png",
-//     link: "https://www.youtube.com/",
-//   },
-// ];
+// Updated socials array structure
+const socials = [
+  { url: "https://www.instagram.com/arvie_k/", icon: "/icons/instagram.png", alt: "Instagram" },
+  { url: "https://www.youtube.com/@ArvieKGames", icon: "/icons/youtube.png", alt: "YouTube" },
+  { url: "https://open.spotify.com/artist/4pNTWVseGDwTkWVr2wSC1y?si=iZfeJxt5S52qRkNk9iAzIw", icon: "/icons/spotify.png", alt: "Spotify" },
+  { url: "https://www.tiktok.com/@arvie_k", icon: "/icons/tiktok.png", alt: "TikTok" }
+];
+
 
 const Navbar = () => {
   return (
@@ -43,6 +29,14 @@ const Navbar = () => {
                   <div className={styles.icon}>
                       <img src="/icons/home.png" alt="Home" className={styles.img} />
                   </div>
+            </div>
+            {/* Add socials section */}
+            <div className={styles.socialsContainer}>
+                {socials.map((social) => (
+                    <a key={social.url} href={social.url} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                        <img src={social.icon} alt={social.alt} className={styles.socialIcon} />
+                    </a>
+                ))}
             </div>
         </div>
     </nav>
