@@ -54,21 +54,43 @@ export default async function Home() {
     // and map properties to the structure expected by Game component (meta)
     const games = gamesArray.reduce((acc, game) => {
         if (game._id) { // Ensure game has an _id
-            acc[game._id] = {
-                title: game.name, // Map name to title
+            acc[game._id] = { // Use game._id as the key (slug)
+                title: game.name,
                 image: game.image,
                 description: game.description,
                 controls: game.controls,
                 devlog: game.devlog,
-                categories: game.category, // Map category to categories
+                categories: game.category,
                 ads: game.ads,
                 url: game.url,
-                release_date: game.release_date // Include release_date
-                // Add other necessary fields if Game component uses them
+                release_date: game.release_date
             };
         }
         return acc;
     }, {});
+
+
+    // Find the latest game based on release_date using the processed 'games' object
+    let latestGameSlug = null;
+    let latestGameMeta = null;
+    if (Object.keys(games).length > 0) {
+        latestGameSlug = Object.entries(games).reduce((latestSlug, [currentSlug, currentMeta]) => {
+            const latestDate = games[latestSlug]?.release_date ? new Date(games[latestSlug].release_date) : new Date(0);
+            const currentDate = currentMeta.release_date ? new Date(currentMeta.release_date) : new Date(0);
+            return currentDate > latestDate ? currentSlug : latestSlug;
+        }, Object.keys(games)[0]); // Initialize with the first game's slug
+
+        latestGameMeta = games[latestGameSlug];
+    }
+
+
+    // Prepare props for NewGame, with fallbacks
+    const newGameProps = {
+        gameSlug: latestGameSlug, // Pass the slug for linking
+        gameImg: latestGameMeta?.image || "https://via.placeholder.com/315x250?text=N/A", // Pass image URL
+        devlogURL: latestGameMeta?.devlog || null, // Keep devlog URL separate
+    };
+
 
     const categoriesList = [
         "Featured", "The Arvie K Collection", "Fan Games & Parodies",
@@ -92,10 +114,11 @@ export default async function Home() {
     return (
         <div className={styles.container}>
             <Navbar />
+            {/* Pass gameSlug, gameImg, and devlogURL to NewGame */}
             <NewGame
-                gameImg="https://img.itch.zone/aW1nLzE3OTA2NDYxLnBuZw==/315x250%23c/%2FI7Now.png"
-                devlogURL="https://www.youtube.com/?watch=BNVpt-CTbYg"
-                thumbnail="https://i.ytimg.com/vi/BNVpt-CTbYg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD84ik9nYlnpr1KqD-n4iaulIXjAQ"
+                gameSlug={newGameProps.gameSlug}
+                gameImg={newGameProps.gameImg}
+                devlogURL={newGameProps.devlogURL}
             />
 
             {/* Map over categories and render GamesGrp for each */}
