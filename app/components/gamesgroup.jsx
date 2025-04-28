@@ -5,10 +5,10 @@ import styles from '../styles/Games.module.css'
 const gamesgroup = props => {
     return (
         <div className={styles.grp}>
-            <h1 style={{textAlign: 'center', marginBottom: '0.2em'}}>{props.title}</h1>
+            <h1 style={{textAlign: 'center', marginBottom: '0.1em'}}>{props.title}</h1>
             {/* Add subtitle below the title if it exists */}
             {props.subtitle && (
-                <h2 style={{textAlign: 'center', fontSize: '1.2rem', fontWeight: 'normal', marginTop: '0', marginBottom: '1em'}}>
+                <h2 style={{textAlign: 'center', fontSize: '1.2rem', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', marginTop: '0', marginBottom: '1em'}}>
                     {props.subtitle}
                 </h2>
             )}
