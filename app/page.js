@@ -76,6 +76,19 @@ export default async function Home() {
         "Play On Mobile"
     ];
 
+    // Map category titles to subtitles
+    const categorySubtitles = {
+        "Featured": "The Latest In Arvie K Games",
+        "The Arvie K Collection": "Games I've Made Over The Years",
+        "Fan Games & Parodies": "Adding A Twist On What Already Exists",
+        "Made In Day": "Games That Were Either A Fun Little Project Or For A Game Jam",
+        "Meme Games": "\"Yall Talking About Gif Memes, My Memes Are PLAYABLE!\" - Arvie K 2020",
+        "OG Arvie K Games": "Games I Made When First Starting Out",
+        "Stuff I Worked On": "Games That I Contributed To",
+        "Play On Mobile": "Games You Can Play On Your Phone"
+    };
+
+
     return (
         <div className={styles.container}>
             <Navbar />
@@ -101,8 +114,11 @@ export default async function Home() {
 
                 // Render GamesGrp only if there are games in this category
                 if (sortedGamesEntries.length > 0) {
+                    // Get the subtitle for the current category
+                    const subtitle = categorySubtitles[category] || ""; // Fallback to empty string if not found
+
                     return (
-                        <GamesGrp key={category} title={category}>
+                        <GamesGrp key={category} title={category} subtitle={subtitle}>
                             {
                                 // Map over the *sorted* entries
                                 sortedGamesEntries.map(([slug, meta]) => {
