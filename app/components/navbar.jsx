@@ -8,8 +8,8 @@ import logo from "../assets/Ui/ArvieKGamesLogoFull.png";
 const socials = [
   { url: "https://www.instagram.com/arvie_k/", icon: "/icons/instagram.png", alt: "Instagram" },
   { url: "https://www.youtube.com/@ArvieKGames", icon: "/icons/youtube.png", alt: "YouTube" },
-  { url: "https://open.spotify.com/artist/4pNTWVseGDwTkWVr2wSC1y?si=iZfeJxt5S52qRkNk9iAzIw", icon: "/icons/spotify.png", alt: "Spotify" },
-  { url: "https://www.tiktok.com/@arvie_k", icon: "/icons/tiktok.png", alt: "TikTok" }
+  { url: "https://arviek.itch.io/", icon: "/icons/itch.png", alt: "Spotify" },
+  { url: "https://discord.gg/tJcNcxsREP", icon: "/icons/discord.png", alt: "TikTok" }
 ];
 
 
