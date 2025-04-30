@@ -7,12 +7,12 @@ import Link from 'next/link'
 const Game = props => {
   return (
     <Link className={styles.game} href={`/${props.slug}`}>
-      {/* <div> */}
-          <img className={styles.gameImg} src={props.meta.image} alt={props.meta.title} />
-          <div className={styles.gameTitleOverlay}>
-            <h3 className={styles.gameTitleText}>{props.meta.title}</h3>
-          </div>
-      {/* </div> */}
+        {/* Wrap image and add play button */}
+        <div className={styles.gameImgContainer}>
+            <img className={styles.gameImg} src={props.meta.image} alt={props.meta.title} />
+            <img className={styles.playButton} src="/icons/PlayButton.png" alt="Play" /> {/* Added Play Button */}
+        </div>
+        <h3 className={styles.gameName}>{props.meta.title}</h3>
     </Link>
   )
 }
