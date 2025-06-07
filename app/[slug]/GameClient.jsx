@@ -10,6 +10,30 @@ export default function GameClient({ game, slug, allGames }) {
     const [showNsfwModal, setShowNsfwModal] = useState(false);
     const router = useRouter();
 
+    // Load Google Ads script
+    useEffect(() => {
+        const scriptId = 'google-ads-script';
+        if (document.getElementById(scriptId)) {
+            // Script already loaded or loading
+            return;
+        }
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID'; // Replace with your client ID
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+        document.body.appendChild(script);
+    }, []);
+
+    // Push ad request after component mounts/updates
+    useEffect(() => {
+        try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error("AdSense error:", e);
+        }
+    }, [game]);
+
     // Check if game is NSFW when component mounts
     useEffect(() => {
         if (game && game.nsfw === true) {
@@ -141,7 +165,17 @@ export default function GameClient({ game, slug, allGames }) {
             {/* NSFW Warning Modal */}
             <NsfwWarningModal />
             
-            <div className={styles.ads}></div>
+            <div className={styles.ads}>
+                {/* Google AdSense Ad Unit */}
+                {/* Replace ca-pub-YOUR_PUBLISHER_ID with your Publisher ID */}
+                {/* Replace YOUR_AD_SLOT_ID with your Ad Unit ID */}
+                <ins className="adsbygoogle"
+                    style={{ display: 'block', width: '160px', height: '600px' }} // Adjust size as needed
+                    data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                    data-ad-slot="YOUR_AD_SLOT_ID"
+                    data-ad-format="auto"
+                    data-full-width-responsive="false"></ins>
+            </div>
             <div className={styles.gameframe}>
                 <div className={styles.box}>
                     <iframe
