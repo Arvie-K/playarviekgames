@@ -292,3 +292,62 @@
         height: 80px;
     }
 }
+
+/* PC Games horizontal slider for mobile */
+.pcGamesContainer {
+    padding: 2rem 0;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+    width: 100%;
+}
+
+.horizontalScroller {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+    padding: 1rem 0.5rem;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* Hide scrollbar but keep functionality */
+.horizontalScroller::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and newer Edge */
+}
+
+.horizontalScroller {
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+    scrollbar-width: none;  /* For Firefox */
+}
+
+/* Adjust game cards inside scroller */
+.horizontalScroller .game {
+    flex: 0 0 auto;
+    width: 250px;
+    max-width: 80%;
+    scroll-snap-align: start;
+    margin: 0 0.25rem;
+}
+
+/* Add left and right padding to show there are more items */
+.horizontalScroller::before,
+.horizontalScroller::after {
+    content: '';
+    padding-left: 1rem;
+}
+
+@media (max-width: 480px) {
+    /* ...existing code... */
+    
+    /* Ensure proper sizing for horizontal scroller items */
+    .horizontalScroller .game {
+        width: 200px;
+    }
+    
+    .pcGamesContainer {
+        padding: 1.5rem 0;
+    }
+}

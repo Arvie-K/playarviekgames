@@ -2,6 +2,7 @@ import Navbar from './components/navbar.jsx';
 import GamesGrp from './components/gamesgroup.jsx';
 import Game from './components/game.jsx';
 import NewGame from './components/newgame.jsx';
+import PCGamesSlider from './components/PCGamesSlider.jsx';
 import { Metadata } from 'next'; // Import Metadata type
 
 import styles from './styles/Home.module.css';
@@ -126,13 +127,13 @@ export default async function Home() {
                 {games && renderCategoryGroup(games, "Play On Mobile", categorySubtitles["Play On Mobile"])}
             </div>
 
-            {/* Other categories */}
+            {/* Other categories - will be combined into a horizontal slider on mobile */}
             <div className={styles.otherCategories}>
-                {games && categoriesList
-                    .filter(category => category !== "Play On Mobile")
-                    .map((category) => {
-                        return renderCategoryGroup(games, category, categorySubtitles[category]);
-                    })}
+                <PCGamesSlider 
+                    games={games} 
+                    categoriesList={categoriesList} 
+                    categorySubtitles={categorySubtitles} 
+                />
             </div>
         </div>
     );
