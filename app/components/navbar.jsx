@@ -18,17 +18,11 @@ const Navbar = () => {
     <nav className={styles.navbar}>
         <div className={styles.container}>
             <div className={styles.topContent}>
-                <div className={styles.icon}>
-                    <img src="/icons/search.png" alt="Search" className={styles.img} />
-                </div>
                 <Link href={`/`}>
                   <div className={styles.logo}>
                       <img src={logo.src} alt="Arvie K Games" className={styles.img} />
                   </div>
                 </Link>
-                  <div className={styles.icon}>
-                      <img src="/icons/home.png" alt="Home" className={styles.img} />
-                  </div>
             </div>
             {/* Add socials section */}
             <div className={styles.socialsContainer}>
