@@ -95,10 +95,38 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .highlight {
     color: var(--accent);
+}
+
+/* Desktop default - Play On Mobile at bottom */
+.mobileFirstSection {
+  order: 2; /* On desktop, this appears after otherCategories */
+}
+
+.otherCategories {
+  order: 1; /* On desktop, this appears first */
+}
+
+/* On mobile screens, reverse the order */
+@media (max-width: 768px) {
+  .mobileFirstSection {
+    order: 1; /* On mobile, this appears first */
+  }
+  
+  .otherCategories {
+    order: 2; /* On mobile, this appears after */
+  }
+  
+  /* Make sure container uses flex display */
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 768px) {
@@ -119,5 +147,16 @@
 @media (max-width: 480px) {
     .grid {
         grid-template-columns: 1fr;
+        justify-items: center; /* Center items horizontally */
+    }
+    
+    .card {
+        width: 80%; /* Make cards take up 80% of screen width */
+        margin: 0 auto; /* Center the cards */
+    }
+    
+    .card img {
+        max-width: 100%; /* Ensure images fill the card width */
+        height: auto;
     }
 }

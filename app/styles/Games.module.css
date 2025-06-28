@@ -259,3 +259,36 @@
         width: 100%;
     }
 }
+
+/* Add new media query for phone-sized screens */
+@media (max-width: 480px) {
+    .games {
+        gap: 2rem; /* Increase vertical spacing between games */
+    }
+    
+    .game {
+        max-width: 80%; /* Make games take 80% of the screen width */
+        width: 80%;
+        margin: 0 auto; /* Center the games */
+    }
+    
+    .gameImgContainer {
+        width: 100%; /* Ensure container takes full width */
+        border-width: 0.4rem; /* Slightly thicker border for visibility */
+    }
+    
+    .gameImg {
+        width: 100%;
+        height: auto;
+    }
+    
+    .gameName {
+        font-size: 1.2rem; /* Slightly larger font for better readability */
+        padding: 1rem 0.5rem;
+    }
+    
+    .playButton {
+        width: 80px; /* Larger play button */
+        height: 80px;
+    }
+}
