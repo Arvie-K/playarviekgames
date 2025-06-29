@@ -34,8 +34,14 @@
 }
 
 .logo > img{
-  width: 13rem;
-  border-radius: 7rem 7rem 1rem 1rem;
+  width: 20rem;
+  border-radius: 2.5rem;
+}
+
+.logo > img:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
 }
 
 .img{
@@ -44,7 +50,7 @@
 }
 
 .socialIcon{
-  width: 2.25rem;
+  width: 3rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
@@ -53,4 +59,10 @@
   cursor: pointer;
   transform: scale(1.2);
   transition: all 0.2s ease;
+}
+
+.socialsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
