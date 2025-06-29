@@ -2,6 +2,7 @@ import Navbar from './components/navbar.jsx';
 import GamesGrp from './components/gamesgroup.jsx';
 import Game from './components/game.jsx';
 import NewGame from './components/newgame.jsx';
+import PCGamesSlider from './components/PCGamesSlider.jsx';
 import { Metadata } from 'next'; // Import Metadata type
 
 import styles from './styles/Home.module.css';
@@ -121,39 +122,50 @@ export default async function Home() {
                 devlogURL={newGameProps.devlogURL}
             />
 
-            {/* Map over categories and render GamesGrp for each */}
-            {games && categoriesList.map((category) => {
-                // Filter games based on the 'categories' property in the transformed meta object
-                const filteredGamesEntries = Object.entries(games)
-                    .filter(([slug, meta]) => meta.categories && meta.categories.includes(category));
+            {/* Mobile-first section - will appear on top on mobile */}
+            <div className={styles.mobileFirstSection}>
+                {games && renderCategoryGroup(games, "Play On Mobile", categorySubtitles["Play On Mobile"])}
+            </div>
 
-                // Sort the filtered games by release_date (descending - latest first)
-                const sortedGamesEntries = filteredGamesEntries.sort(([slugA, metaA], [slugB, metaB]) => {
-                    // Handle cases where release_date might be missing or invalid
-                    const dateA = metaA.release_date ? new Date(metaA.release_date) : new Date(0);
-                    const dateB = metaB.release_date ? new Date(metaB.release_date) : new Date(0);
-                    return dateB - dateA; // Descending order
-                });
-
-                // Render GamesGrp only if there are games in this category
-                if (sortedGamesEntries.length > 0) {
-                    // Get the subtitle for the current category
-                    const subtitle = categorySubtitles[category] || ""; // Fallback to empty string if not found
-
-                    return (
-                        <GamesGrp key={category} title={category} subtitle={subtitle}>
-                            {
-                                // Map over the *sorted* entries
-                                sortedGamesEntries.map(([slug, meta]) => {
-                                    // Pass slug (key) and the transformed meta object
-                                    return <Game key={slug} slug={slug} meta={meta} />
-                                })
-                            }
-                        </GamesGrp>
-                    );
-                }
-                return null; // Return null if no games found for this category
-            })}
+            {/* Other categories - will be combined into a horizontal slider on mobile */}
+            <div className={styles.otherCategories}>
+                <PCGamesSlider 
+                    games={games} 
+                    categoriesList={categoriesList} 
+                    categorySubtitles={categorySubtitles} 
+                />
+            </div>
         </div>
     );
+
+    // Helper function to render a category group
+    function renderCategoryGroup(games, category, subtitle) {
+        // Filter games based on the 'categories' property in the transformed meta object
+        const filteredGamesEntries = Object.entries(games)
+            .filter(([slug, meta]) => meta.categories && meta.categories.includes(category));
+
+        // Sort the filtered games by release_date (descending - latest first)
+        const sortedGamesEntries = filteredGamesEntries.sort(([slugA, metaA], [slugB, metaB]) => {
+            // Handle cases where release_date might be missing or invalid
+            const dateA = metaA.release_date ? new Date(metaA.release_date) : new Date(0);
+            const dateB = metaB.release_date ? new Date(metaB.release_date) : new Date(0);
+            return dateB - dateA; // Descending order
+        });
+
+        // Render GamesGrp only if there are games in this category
+        if (sortedGamesEntries.length > 0) {
+            return (
+                <GamesGrp key={category} title={category} subtitle={subtitle || ""}>
+                    {
+                        // Map over the *sorted* entries
+                        sortedGamesEntries.map(([slug, meta]) => {
+                            // Pass slug (key) and the transformed meta object
+                            return <Game key={slug} slug={slug} meta={meta} />
+                        })
+                    }
+                </GamesGrp>
+            );
+        }
+        return null; // Return null if no games found for this category
+    }
 }

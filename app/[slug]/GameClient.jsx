@@ -10,6 +10,7 @@ export default function GameClient({ game, slug, allGames }) {
     const [showNsfwModal, setShowNsfwModal] = useState(false);
     const router = useRouter();
 
+
     // Check if game is NSFW when component mounts
     useEffect(() => {
         if (game && game.nsfw === true) {
@@ -62,6 +63,7 @@ export default function GameClient({ game, slug, allGames }) {
 
         setIsFullScreen(true);
 
+        // First enter fullscreen
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         } else if (elem.mozRequestFullScreen) {
@@ -70,6 +72,19 @@ export default function GameClient({ game, slug, allGames }) {
             elem.webkitRequestFullscreen();
         } else if (elem.msRequestFullscreen) {
             elem.msRequestFullscreen();
+        }
+        
+        // Then try to lock orientation to landscape on mobile devices
+        try {
+            // Check if orientation API is available (mobile devices)
+            if (screen.orientation) {
+                screen.orientation.lock('landscape').catch(error => {
+                    // Silently handle errors - not all browsers support this
+                    console.log("Orientation lock failed:", error);
+                });
+            }
+        } catch (e) {
+            console.log("Orientation API not supported");
         }
 
         document.addEventListener('fullscreenchange', handleFullscreenExit);
@@ -81,6 +96,16 @@ export default function GameClient({ game, slug, allGames }) {
     function handleFullscreenExit() {
         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
             setIsFullScreen(false);
+            
+            // Reset orientation when exiting fullscreen
+            try {
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            } catch (e) {
+                console.log("Orientation unlock failed or not supported");
+            }
+            
             document.removeEventListener('fullscreenchange', handleFullscreenExit);
             document.removeEventListener('webkitfullscreenchange', handleFullscreenExit);
             document.removeEventListener('mozfullscreenchange', handleFullscreenExit);
@@ -141,7 +166,8 @@ export default function GameClient({ game, slug, allGames }) {
             {/* NSFW Warning Modal */}
             <NsfwWarningModal />
             
-            <div className={styles.ads}></div>
+            <div className={styles.ads}>
+            </div>
             <div className={styles.gameframe}>
                 <div className={styles.box}>
                     <iframe
