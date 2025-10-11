@@ -8,13 +8,22 @@ import { useRouter } from 'next/navigation';
 export default function GameClient({ game, slug, allGames }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [showNsfwModal, setShowNsfwModal] = useState(false);
+    const [showMobileWarning, setShowMobileWarning] = useState(false);
     const router = useRouter();
 
 
-    // Check if game is NSFW when component mounts
+    // Check if game is NSFW or if it's a non-mobile game on mobile device when component mounts
     useEffect(() => {
         if (game && game.nsfw === true) {
             setShowNsfwModal(true);
+        }
+        
+        // Check if user is on mobile and game is not mobile-friendly
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isMobileGame = game.category && game.category.includes("Play On Mobile");
+        
+        if (isMobileDevice && !isMobileGame) {
+            setShowMobileWarning(true);
         }
     }, [game]);
 
@@ -26,6 +35,16 @@ export default function GameClient({ game, slug, allGames }) {
     // Handle user choosing to go back to home page
     const handleGoBack = () => {
         router.push('/');
+    };
+
+    // Handle mobile warning - proceed anyway
+    const handleProceedAnyway = () => {
+        setShowMobileWarning(false);
+    };
+
+    // Handle mobile warning - view mobile games
+    const handleViewMobileGames = () => {
+        router.push('/#mobile-games');
     };
 
     // NSFW Warning Modal Component
@@ -50,6 +69,35 @@ export default function GameClient({ game, slug, allGames }) {
                             onClick={handleGoBack}
                         >
                             Go Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    // Mobile Warning Modal Component
+    const MobileWarningModal = () => {
+        if (!showMobileWarning) return null;
+
+        return (
+            <div className={styles.modalOverlay}>
+                <div className={styles.modalContent}>
+                    <h2>⚠️ Desktop Game Warning</h2>
+                    <p>This game is meant to be played on desktop.</p>
+                    <p>It may not work properly on your device.</p>
+                    <div className={styles.modalButtons}>
+                        <button 
+                            className={`${styles.modalButton} ${styles.continueButton}`} 
+                            onClick={handleProceedAnyway}
+                        >
+                            Proceed Anyway
+                        </button>
+                        <button 
+                            className={`${styles.modalButton} ${styles.backButton}`} 
+                            onClick={handleViewMobileGames}
+                        >
+                            View Mobile Games
                         </button>
                     </div>
                 </div>
@@ -165,6 +213,9 @@ export default function GameClient({ game, slug, allGames }) {
         <div className={styles.layout}>
             {/* NSFW Warning Modal */}
             <NsfwWarningModal />
+            
+            {/* Mobile Warning Modal */}
+            <MobileWarningModal />
             
             <div className={styles.ads}>
             </div>

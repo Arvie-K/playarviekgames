@@ -72,25 +72,50 @@ export default async function Home() {
     }, {});
 
 
-    // Find the latest game based on release_date using the processed 'games' object
-    let latestGameSlug = null;
-    let latestGameMeta = null;
-    if (Object.keys(games).length > 0) {
-        latestGameSlug = Object.entries(games).reduce((latestSlug, [currentSlug, currentMeta]) => {
+    // Fetch the featured game from the API
+    let featuredGameSlug = null;
+    let featuredGameMeta = null;
+    
+    try {
+        const featuredRes = await fetch('https://arviek-games-editor.vercel.app/featured', { cache: 'no-store' });
+        const featuredData = await featuredRes.json();
+        
+        if (featuredData.success && featuredData.featured_game) {
+            const featuredGame = featuredData.featured_game;
+            featuredGameSlug = featuredGame._id;
+            featuredGameMeta = {
+                title: featuredGame.name,
+                image: featuredGame.image,
+                description: featuredGame.description,
+                controls: featuredGame.controls,
+                devlog: featuredGame.devlog,
+                categories: featuredGame.category,
+                ads: featuredGame.ads,
+                url: featuredGame.url,
+                release_date: featuredGame.release_date
+            };
+        }
+    } catch (error) {
+        console.error('Error fetching featured game:', error);
+    }
+    
+    // Fallback to latest game if no featured game is set
+    if (!featuredGameSlug && Object.keys(games).length > 0) {
+        featuredGameSlug = Object.entries(games).reduce((latestSlug, [currentSlug, currentMeta]) => {
             const latestDate = games[latestSlug]?.release_date ? new Date(games[latestSlug].release_date) : new Date(0);
             const currentDate = currentMeta.release_date ? new Date(currentMeta.release_date) : new Date(0);
             return currentDate > latestDate ? currentSlug : latestSlug;
         }, Object.keys(games)[0]); // Initialize with the first game's slug
 
-        latestGameMeta = games[latestGameSlug];
+        featuredGameMeta = games[featuredGameSlug];
     }
 
 
     // Prepare props for NewGame, with fallbacks
     const newGameProps = {
-        gameSlug: latestGameSlug, // Pass the slug for linking
-        gameImg: latestGameMeta?.image || "https://via.placeholder.com/315x250?text=N/A", // Pass image URL
-        devlogURL: latestGameMeta?.devlog || null, // Keep devlog URL separate
+        gameSlug: featuredGameSlug, // Pass the slug for linking
+        gameImg: featuredGameMeta?.image || "https://via.placeholder.com/315x250?text=N/A", // Pass image URL
+        devlogURL: featuredGameMeta?.devlog || null, // Keep devlog URL separate
     };
 
 

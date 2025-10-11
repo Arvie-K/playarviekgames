@@ -283,6 +283,7 @@
 .modalContent p {
   margin: 15px 0;
   color: #e0e0e0;
+  line-height: 1.6;
 }
 
 .modalButtons {
