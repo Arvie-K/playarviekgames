@@ -197,10 +197,6 @@
     text-align: left; /* Align text to the left */
 }
 
-.descriptionSection {
-    /* Container for each section (Released, Description, Controls) */
-}
-
 .descriptionTitle {
     font-size: 1.2rem; /* Adjusted size */
     font-weight: 600; /* Make title bolder */
@@ -228,6 +224,7 @@
     font-size: small;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold; /* Make content bold */
+    white-space: pre-line;
 }
 
 .actions {

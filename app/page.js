@@ -54,7 +54,8 @@ export default async function Home() {
     // Transform array into an object keyed by _id (slug)
     // and map properties to the structure expected by Game component (meta)
     const games = gamesArray.reduce((acc, game) => {
-        if (game._id) { // Ensure game has an _id
+        const isVisible = game.show === undefined || game.show === true;
+        if (game._id && isVisible) { // Ensure game has an _id and is visible
             acc[game._id] = { // Use game._id as the key (slug)
                 title: game.name,
                 image: game.image,

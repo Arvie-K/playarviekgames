@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
         const res = await fetch(`https://arviek-games-editor.vercel.app/games/${slug}`, { cache: 'no-store' });
         if (res.ok) {
             const gameData = await res.json();
-            if (gameData) {
+            if (gameData && (gameData.show === undefined || gameData.show === true)) {
                 gameName = gameData.name || "Game Not Found";
                 // Use game description if available, otherwise create a default one
                 gameDescription = gameData.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${gameData.category?.join(', ') || 'various'} categories.`;
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
                  const allRes = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
                  if (allRes.ok) {
                      const gamesArray = await allRes.json();
-                     const foundGame = gamesArray.find(game => game._id === slug);
+                     const foundGame = gamesArray.find(game => game._id === slug && (game.show === undefined || game.show === true));
                      if (foundGame) {
                          gameName = foundGame.name || "Game Not Found";
                          gameDescription = foundGame.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${foundGame.category?.join(', ') || 'various'} categories.`;
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
              const allRes = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
              if (allRes.ok) {
                  const gamesArray = await allRes.json();
-                 const foundGame = gamesArray.find(game => game._id === slug);
+                 const foundGame = gamesArray.find(game => game._id === slug && (game.show === undefined || game.show === true));
                  if (foundGame) {
                      gameName = foundGame.name || "Game Not Found";
                      gameDescription = foundGame.description || `Play ${gameName} online for free on Arvie K Games. Enjoy this fun game in the ${foundGame.category?.join(', ') || 'various'} categories.`;
@@ -141,11 +141,12 @@ export default async function Page({ params }) {
             const gamesArray = await res.json();
 
             // Find the specific game object from the array
-            gameData = gamesArray.find(game => game._id === slug);
+            gameData = gamesArray.find(game => game._id === slug && (game.show === undefined || game.show === true));
 
             // Transform the array into an object keyed by _id for the "More Games" section
             allGames = gamesArray.reduce((acc, game) => {
-                if (game._id) {
+                const isVisible = game.show === undefined || game.show === true;
+                if (game._id && isVisible) {
                      acc[game._id] = { // Key is slug (_id)
                         // Value is the meta object expected by Game component
                         title: game.name,
