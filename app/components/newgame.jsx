@@ -8,7 +8,7 @@ import Link from 'next/link' // Import Link
 const NewGame = props => {
   // Construct YouTube embed URL only if devlogURL exists
   const embedUrl = props.devlogURL ? `https://www.youtube.com/embed/${props.devlogURL}` : null;
-  const gameUrl = props.gameSlug ? `/game/${props.gameSlug}` : '#'; // Construct game link URL
+  const gameUrl = props.gameSlug ? `/${props.gameSlug}` : '#'; // Construct game link URL
 
   return (
     <div className={styles.newGameContainer}>
