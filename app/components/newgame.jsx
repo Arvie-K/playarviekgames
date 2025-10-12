@@ -12,7 +12,7 @@ const NewGame = props => {
 
   return (
     <div className={styles.newGameContainer}>
-        <h2 className={styles.newGameTitle}>New Game</h2>
+        <h2 className={styles.newGameTitle}>Featured Game</h2>
         <div className={styles.newGameGrid}>
             {/* Left Side: Recreate Thumbnail Link */}
             {props.gameSlug ? (
