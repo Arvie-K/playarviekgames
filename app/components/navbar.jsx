@@ -6,10 +6,10 @@ import logo from "../assets/Ui/Arvie_K_Games_Nameplate.png";
 
 // Updated socials array structure
 const socials = [
-  { url: "https://www.youtube.com/@ArvieKGames", icon: "/icons/youtube.png", alt: "YouTube" },
-  { url: "https://arviek.itch.io/", icon: "/icons/itch.png", alt: "Spotify" },
-  { url: "https://discord.gg/tJcNcxsREP", icon: "/icons/discord.png", alt: "TikTok" },
-  { url: "https://www.instagram.com/arvie_k/", icon: "/icons/instagram.png", alt: "Instagram" },
+  { url: "https://www.youtube.com/@ArvieK", icon: "/icons/youtube.png", alt: "YouTube" },
+  { url: "https://arviek.itch.io/", icon: "/icons/itch.png", alt: "Itch.io" },
+  { url: "https://discord.gg/tJcNcxsREP", icon: "/icons/discord.png", alt: "Discord" },
+  { url: "https://www.tiktok.com/@arvie_k", icon: "/icons/tiktok.png", alt: "TikTok" },
 ];
 
 
