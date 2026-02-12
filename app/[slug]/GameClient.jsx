@@ -5,10 +5,19 @@ import Game from "../components/game";
 import styles from '../styles/GamePage.module.css';
 import { useRouter } from 'next/navigation';
 
-export default function GameClient({ game, slug, allGames }) {
+export default function GameClient({ game, slug, allGames, banners = [] }) {
     const [showNsfwModal, setShowNsfwModal] = useState(false);
     const [showMobileWarning, setShowMobileWarning] = useState(false);
+    const [currentBanner, setCurrentBanner] = useState(null);
     const router = useRouter();
+
+    // Select a random banner on mount
+    useEffect(() => {
+        if (banners && banners.length > 0) {
+            const randomIndex = Math.floor(Math.random() * banners.length);
+            setCurrentBanner(banners[randomIndex]);
+        }
+    }, [banners]);
 
 
     // Check if game is NSFW or if it's a non-mobile game on mobile device when component mounts
@@ -160,7 +169,29 @@ export default function GameClient({ game, slug, allGames }) {
             {/* Mobile Warning Modal */}
             <MobileWarningModal />
             
-            <div className={styles.ads}>
+            {/* Announcement Section - Desktop (left side) */}
+            <div className={styles.announcement}>
+                <h3 className={styles.text}>Announcement</h3>
+                <div className={styles.bannerContainer}>
+                    {currentBanner ? (
+                        <a 
+                            href={currentBanner.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className={styles.bannerLink}
+                        >
+                            <img 
+                                src={currentBanner.image} 
+                                alt={currentBanner.alt || 'Announcement'} 
+                                className={styles.bannerImage}
+                            />
+                        </a>
+                    ) : (
+                        <div className={styles.bannerPlaceholder}>
+                            <span>No announcements</span>
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={styles.gameframe}>
                 <div className={styles.box}>
@@ -269,6 +300,31 @@ export default function GameClient({ game, slug, allGames }) {
                             <Game key={key} slug={key} meta={allGames[key]} />
                         ))
                     }
+                </div>
+            </div>
+            
+            {/* Announcement Section - Mobile (below More Games) */}
+            <div className={styles.announcementMobile}>
+                <h3 className={styles.text}>Announcement</h3>
+                <div className={styles.bannerContainer}>
+                    {currentBanner ? (
+                        <a 
+                            href={currentBanner.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className={styles.bannerLink}
+                        >
+                            <img 
+                                src={currentBanner.image} 
+                                alt={currentBanner.alt || 'Announcement'} 
+                                className={styles.bannerImage}
+                            />
+                        </a>
+                    ) : (
+                        <div className={styles.bannerPlaceholder}>
+                            <span>No announcements</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
