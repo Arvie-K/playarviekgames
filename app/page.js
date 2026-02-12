@@ -47,8 +47,15 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
-    // Fetch data from the API
-    const res = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
+    // Fetch data from the API with extended timeout for slow DNS resolution
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    
+    const res = await fetch('https://arviek-games-editor.vercel.app/games', { 
+        cache: 'no-store',
+        signal: controller.signal
+    });
+    clearTimeout(timeoutId);
     const gamesArray = await res.json();
 
     // Transform array into an object keyed by _id (slug)

@@ -6,7 +6,6 @@ import styles from '../styles/GamePage.module.css';
 import { useRouter } from 'next/navigation';
 
 export default function GameClient({ game, slug, allGames }) {
-    const [isFullScreen, setIsFullScreen] = useState(false);
     const [showNsfwModal, setShowNsfwModal] = useState(false);
     const [showMobileWarning, setShowMobileWarning] = useState(false);
     const router = useRouter();
@@ -105,62 +104,6 @@ export default function GameClient({ game, slug, allGames }) {
         );
     };
 
-    function fullScreen() {
-        const elem = document.querySelector('#game');
-        if (!elem) return;
-
-        setIsFullScreen(true);
-
-        // First enter fullscreen
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-        }
-        
-        // Then try to lock orientation to landscape on mobile devices
-        try {
-            // Check if orientation API is available (mobile devices)
-            if (screen.orientation) {
-                screen.orientation.lock('landscape').catch(error => {
-                    // Silently handle errors - not all browsers support this
-                    console.log("Orientation lock failed:", error);
-                });
-            }
-        } catch (e) {
-            console.log("Orientation API not supported");
-        }
-
-        document.addEventListener('fullscreenchange', handleFullscreenExit);
-        document.addEventListener('webkitfullscreenchange', handleFullscreenExit);
-        document.addEventListener('mozfullscreenchange', handleFullscreenExit);
-        document.addEventListener('MSFullscreenChange', handleFullscreenExit);
-    }
-
-    function handleFullscreenExit() {
-        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-            setIsFullScreen(false);
-            
-            // Reset orientation when exiting fullscreen
-            try {
-                if (screen.orientation && screen.orientation.unlock) {
-                    screen.orientation.unlock();
-                }
-            } catch (e) {
-                console.log("Orientation unlock failed or not supported");
-            }
-            
-            document.removeEventListener('fullscreenchange', handleFullscreenExit);
-            document.removeEventListener('webkitfullscreenchange', handleFullscreenExit);
-            document.removeEventListener('mozfullscreenchange', handleFullscreenExit);
-            document.removeEventListener('MSFullscreenChange', handleFullscreenExit);
-        }
-    }
-
     function share() {
         const url = window.location.href;
         navigator.clipboard.writeText(url).then(() => {
@@ -238,7 +181,6 @@ export default function GameClient({ game, slug, allGames }) {
                     </div>
                     <div className={styles.actions}>
                         <img className={styles.barIcon} src="/icons/share.png" alt="Share" onClick={share} title="Copy Link" />
-                        <img className={styles.barIcon} src="/icons/full.png" alt="Fullscreen" onClick={fullScreen} title="Fullscreen" />
                     </div>
                 </div>
                 <div className={styles.bottomSection}>
