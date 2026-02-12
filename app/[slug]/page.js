@@ -134,6 +134,17 @@ export default async function Page({ params }) {
     // Fetch all games data
     let gameData = null; // Store the raw game object found
     let allGames = null; // Store the transformed object for "More Games"
+    let banners = []; // Store announcement banners
+
+    // Fetch banners
+    try {
+        const bannersRes = await fetch('https://arviek-games-editor.vercel.app/banners', { cache: 'no-store' });
+        if (bannersRes.ok) {
+            banners = await bannersRes.json();
+        }
+    } catch (error) {
+        console.error("Error fetching banners:", error);
+    }
 
     try {
         const res = await fetch('https://arviek-games-editor.vercel.app/games', { cache: 'no-store' });
@@ -185,8 +196,8 @@ export default async function Page({ params }) {
     return (
         <div>
             <Navbar />
-            {/* Pass the raw gameData object and the transformed allGames object */}
-            <GameClient game={gameData} slug={slug} allGames={allGames} />
+            {/* Pass the raw gameData object, transformed allGames object, and banners */}
+            <GameClient game={gameData} slug={slug} allGames={allGames} banners={banners} />
         </div>
     );
 }
